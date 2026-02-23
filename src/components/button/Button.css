@@ -1,0 +1,24 @@
+.btn {
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-transparent {
+  background-color: rgba(0, 0, 0, 0); 
+  color: #ff0000; 
+  font-size: x-small;
+  border: 2px solid currentcolor;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btn-transparent:hover {
+  /* Hover state: Slightly opaque (e.g., 20% black) */
+  background-color: rgba(231, 231, 231, 0.089); 
+}

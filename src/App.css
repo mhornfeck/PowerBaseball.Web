@@ -20,22 +20,4 @@
     object-fit: contain;
 }
 
-.transparent-button {
-  background-color: rgba(0, 0, 0, 0); 
-  color: #ff0000; 
-  font-size: x-small;
-  border: 2px solid currentcolor;
-  border-radius: 8px;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-transform: uppercase;
-
-  transition: background-color 0.3s ease;
-}
-
-.transparent-button:hover {
-  /* Hover state: Slightly opaque (e.g., 20% black) */
-  background-color: rgba(231, 231, 231, 0.089); 
-}
-
 
