@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "api:pull": "dotenv -e .env.local -- cross-env-shell \"curl.exe -k $VITE_API_SPEC_URL -o src/api/openapi.json\"",
+    "api:gen": "openapi-typescript ./src/api/openapi.json -o src/api/schema.d.ts",
+    "api:update": "npm run api:pull && npm run api:gen"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -18,10 +21,13 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^9.39.1",
+    "cross-env": "^10.1.0",
+    "dotenv-cli": "^11.0.0",
+    "eslint": "^9.39.3",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "openapi-typescript": "^6.7.6",
     "vite": "^7.3.1"
   }
 }
