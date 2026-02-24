@@ -3,6 +3,7 @@ import TitleScreen from "./screens/TitleScreen";
 import GameSetupScreen from "./screens/GameSetupScreen";
 import { TeamSetup } from "./models/TeamSetup"
 import "./App.css";
+import GameRunnerScreen from "./screens/GameRunnerScreen";
 
 export default function App() {
   const [screen, setScreen] = useState("title");
@@ -24,7 +25,7 @@ export default function App() {
       )}
 
       {screen === "game-runner" && (
-        <div>RUN IT BACK</div>
+        <GameRunnerScreen onBack={() => setScreen("setup")} />
       )}
     </>
   );

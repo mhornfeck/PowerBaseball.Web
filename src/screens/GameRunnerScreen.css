@@ -1,0 +1,30 @@
+/* /screens/GameRunnerScreen.css */
+.game-runner-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full viewport */
+  overflow: hidden;
+}
+
+.field-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* scale nicely */
+}
+
+.overlay-text {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36px;
+  color: white;
+  text-shadow: 1px 1px 4px black;
+}
+
+.game-runner-container .menu {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
