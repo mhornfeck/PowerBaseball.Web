@@ -37,7 +37,24 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewGameResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewGameResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewGameResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -147,6 +164,254 @@
   },
   "components": {
     "schemas": {
+      "AtBatInput": {
+        "type": "object",
+        "properties": {
+          "pitcherInput": {
+            "$ref": "#/components/schemas/PitcherInput"
+          },
+          "batterInput": {
+            "$ref": "#/components/schemas/BatterInput"
+          }
+        }
+      },
+      "Batter": {
+        "required": [
+          "firstName",
+          "lastName",
+          "jerseyNumber",
+          "attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "jerseyNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/BatterAttributes"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/BattingStatistics"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Batter2": {
+        "required": [
+          "firstName",
+          "lastName",
+          "jerseyNumber",
+          "attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "jerseyNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attributes": { },
+          "statistics": { },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "nullable": true
+      },
+      "BatterAttributes": {
+        "required": [
+          "contact",
+          "power"
+        ],
+        "type": "object",
+        "properties": {
+          "contact": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "power": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "overall": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BatterInput": {
+        "type": "object",
+        "properties": {
+          "swingType": {
+            "$ref": "#/components/schemas/SwingType"
+          },
+          "pitchType": {
+            "$ref": "#/components/schemas/NullableOfPitchType"
+          },
+          "pitchLocationHorizontal": {
+            "$ref": "#/components/schemas/NullableOfPitchLocationHorizontal"
+          },
+          "pitchLocationVertical": {
+            "$ref": "#/components/schemas/NullableOfPitchLocationVertical"
+          }
+        },
+        "nullable": true
+      },
+      "BattingStatistics": {
+        "type": "object",
+        "properties": {
+          "runs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "singles": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "doubles": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "triples": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "homeruns": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "atBats": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "runsBattedIn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBases": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "battingAverage": {
+            "type": "number",
+            "format": "double"
+          },
+          "sluggingPercentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "sluggingPercentageDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "battingAverageDisplay": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "properties": {
+          "homeTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "awayTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "inning": {
+            "$ref": "#/components/schemas/Inning"
+          },
+          "firstBase": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "secondBase": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "thirdBase": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "battingTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "pitchingTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "currentBatter": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "isFinal": {
+            "type": "boolean"
+          },
+          "outs": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GameEngineData": {
+        "required": [
+          "gameId",
+          "home",
+          "away",
+          "game",
+          "currentState",
+          "currentAtBatInput"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "home": {
+            "$ref": "#/components/schemas/GameTeam"
+          },
+          "away": {
+            "$ref": "#/components/schemas/GameTeam"
+          },
+          "game": {
+            "$ref": "#/components/schemas/Game"
+          },
+          "currentState": {
+            "$ref": "#/components/schemas/GameEngineStateData"
+          },
+          "currentAtBatInput": {
+            "$ref": "#/components/schemas/AtBatInput"
+          }
+        }
+      },
+      "GameEngineStateData": {
+        "type": "object",
+        "properties": {
+          "stateType": {
+            "$ref": "#/components/schemas/GameEngineStateType"
+          }
+        }
+      },
+      "GameEngineStateType": {
+        "type": "integer"
+      },
       "GameEventRequest": {
         "required": [
           "eventType"
@@ -181,19 +446,16 @@
             "type": "string"
           },
           "swingType": {
-            "type": "integer"
+            "$ref": "#/components/schemas/SwingType"
           },
           "pitchType": {
-            "type": "integer",
-            "nullable": true
+            "$ref": "#/components/schemas/NullableOfPitchType"
           },
           "pitchLocationHorizontal": {
-            "type": "integer",
-            "nullable": true
+            "$ref": "#/components/schemas/NullableOfPitchLocationHorizontal"
           },
           "pitchLocationVertical": {
-            "type": "integer",
-            "nullable": true
+            "$ref": "#/components/schemas/NullableOfPitchLocationVertical"
           },
           "gameId": {
             "type": "string",
@@ -210,13 +472,13 @@
             "type": "string"
           },
           "pitchType": {
-            "type": "integer"
+            "$ref": "#/components/schemas/PitchType"
           },
           "pitchLocationHorizontal": {
-            "type": "integer"
+            "$ref": "#/components/schemas/PitchLocationHorizontal"
           },
           "pitchLocationVertical": {
-            "type": "integer"
+            "$ref": "#/components/schemas/PitchLocationVertical"
           },
           "gameId": {
             "type": "string",
@@ -242,6 +504,82 @@
           }
         }
       },
+      "GamePlayer": {
+        "required": [
+          "id",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "GameTeam": {
+        "required": [
+          "team",
+          "mode",
+          "players"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "team": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/GameTeamMode"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GamePlayer"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "GameTeamMode": {
+        "type": "integer"
+      },
+      "Inning": {
+        "type": "object",
+        "properties": {
+          "inningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inningHalf": {
+            "$ref": "#/components/schemas/InningHalf"
+          }
+        }
+      },
+      "InningHalf": {
+        "type": "integer"
+      },
+      "Lineup": {
+        "type": "object",
+        "properties": {
+          "batters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Batter"
+            }
+          },
+          "overallRating": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "LoadGameRequest": {
         "required": [
           "gameId"
@@ -253,6 +591,54 @@
             "format": "uuid"
           }
         }
+      },
+      "NewGameResponse": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GameEngineData"
+          }
+        }
+      },
+      "NullableOfPitchLocationHorizontal": {
+        "type": "integer",
+        "nullable": true
+      },
+      "NullableOfPitchLocationVertical": {
+        "type": "integer",
+        "nullable": true
+      },
+      "NullableOfPitchType": {
+        "type": "integer",
+        "nullable": true
+      },
+      "PitcherInput": {
+        "type": "object",
+        "properties": {
+          "pitchType": {
+            "$ref": "#/components/schemas/PitchType"
+          },
+          "pitchLocationHorizontal": {
+            "$ref": "#/components/schemas/PitchLocationHorizontal"
+          },
+          "pitchLocationVertical": {
+            "$ref": "#/components/schemas/PitchLocationVertical"
+          }
+        },
+        "nullable": true
+      },
+      "PitchLocationHorizontal": {
+        "type": "integer"
+      },
+      "PitchLocationVertical": {
+        "type": "integer"
+      },
+      "PitchType": {
+        "type": "integer"
       },
       "StartGameRequest": {
         "required": [
@@ -271,6 +657,41 @@
           },
           "awayTeam": {
             "$ref": "#/components/schemas/TeamControlModel"
+          }
+        }
+      },
+      "SwingType": {
+        "type": "integer"
+      },
+      "Team": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "overall": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lineup": {
+            "$ref": "#/components/schemas/Lineup"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/BattingStatistics"
+          },
+          "currentBatter": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
