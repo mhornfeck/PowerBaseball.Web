@@ -410,7 +410,12 @@
         }
       },
       "GameEngineStateType": {
-        "type": "integer"
+        "enum": [
+          "WaitForPlayers",
+          "GetPitcherInput",
+          "GetBatterInput",
+          "ResolveAtBat"
+        ]
       },
       "GameEventRequest": {
         "required": [

@@ -2,4 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type GameEngineStateType = number;
+export enum GameEngineStateType {
+    WAIT_FOR_PLAYERS = 'WaitForPlayers',
+    GET_PITCHER_INPUT = 'GetPitcherInput',
+    GET_BATTER_INPUT = 'GetBatterInput',
+    RESOLVE_AT_BAT = 'ResolveAtBat',
+}

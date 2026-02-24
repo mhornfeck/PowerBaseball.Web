@@ -8,6 +8,7 @@ import { useGame } from "../context/GameContext";
 import { Batter } from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
+import UserControl from "../components/user-control/UserControl";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -17,6 +18,8 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
 
   const { game } = useGame();
+
+  console.log("Current Game State:", game?.currentState.stateType);
 
   if (!game) {
     return <div>Loading game...</div>;
@@ -67,6 +70,8 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
           />
         )}
       </div>
+
+      <UserControl />
 
       {/* Example Back button */}
       <div className="menu">

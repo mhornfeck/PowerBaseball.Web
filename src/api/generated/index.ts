@@ -16,7 +16,7 @@ export type { BattingStatistics } from './models/BattingStatistics';
 export type { Game } from './models/Game';
 export type { GameEngineData } from './models/GameEngineData';
 export type { GameEngineStateData } from './models/GameEngineStateData';
-export type { GameEngineStateType } from './models/GameEngineStateType';
+export { GameEngineStateType } from './models/GameEngineStateType';
 export type { GameEventRequest } from './models/GameEventRequest';
 export type { GameEventRequestBatterInputEventRequest } from './models/GameEventRequestBatterInputEventRequest';
 export type { GameEventRequestPitcherInputEventRequest } from './models/GameEventRequestPitcherInputEventRequest';
