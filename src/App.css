@@ -13,9 +13,15 @@
 }
 
 .image-container img {
-    max-width: 600px;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .image-container img {
+    max-width: 600px;
+  }
 }
 
 
