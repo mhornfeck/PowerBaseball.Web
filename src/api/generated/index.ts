@@ -13,6 +13,8 @@ export type { GameEventRequestPitcherInputEventRequest } from './models/GameEven
 export type { GameEventRequestPlayerReadyEventRequest } from './models/GameEventRequestPlayerReadyEventRequest';
 export type { LoadGameRequest } from './models/LoadGameRequest';
 export type { StartGameRequest } from './models/StartGameRequest';
-export type { TeamModel } from './models/TeamModel';
+export type { TeamControlModel } from './models/TeamControlModel';
+export type { TeamListingModel } from './models/TeamListingModel';
 
 export { GameEngineService } from './services/GameEngineService';
+export { TeamsService } from './services/TeamsService';

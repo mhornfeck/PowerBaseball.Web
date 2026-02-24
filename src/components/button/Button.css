@@ -20,5 +20,21 @@
 
 .btn-transparent:hover {
   /* Hover state: Slightly opaque (e.g., 20% black) */
-  background-color: rgba(231, 231, 231, 0.089); 
+  background-color: rgba(231, 231, 231, 0.212); 
+}
+
+.btn-primary {
+  background-color: #ff0000; 
+  color: #ffffff; 
+  font-size: x-small;
+  border: 2px solid #ff0000;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  /* Hover state: Slightly opaque (e.g., 20% black) */
+  background-color: #a80505
 }

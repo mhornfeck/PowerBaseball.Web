@@ -105,6 +105,44 @@
           }
         }
       }
+    },
+    "/teams": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamListingModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamListingModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamListingModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -229,14 +267,14 @@
             "nullable": true
           },
           "homeTeam": {
-            "$ref": "#/components/schemas/TeamModel"
+            "$ref": "#/components/schemas/TeamControlModel"
           },
           "awayTeam": {
-            "$ref": "#/components/schemas/TeamModel"
+            "$ref": "#/components/schemas/TeamControlModel"
           }
         }
       },
-      "TeamModel": {
+      "TeamControlModel": {
         "required": [
           "id"
         ],
@@ -253,12 +291,39 @@
             }
           }
         }
+      },
+      "TeamListingModel": {
+        "required": [
+          "id",
+          "city",
+          "name",
+          "overallRating"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "overallRating": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       }
     }
   },
   "tags": [
     {
       "name": "GameEngine"
+    },
+    {
+      "name": "Teams"
     }
   ]
 }

@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { TeamModel } from './TeamModel';
+import type { TeamControlModel } from './TeamControlModel';
 export type StartGameRequest = {
     gameId?: string | null;
-    homeTeam: TeamModel;
-    awayTeam: TeamModel;
+    homeTeam: TeamControlModel;
+    awayTeam: TeamControlModel;
 };
 

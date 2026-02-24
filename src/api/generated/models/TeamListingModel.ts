@@ -2,8 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type TeamModel = {
+export type TeamListingModel = {
     id: string;
-    playerIds?: Array<string>;
+    city: string;
+    name: string;
+    overallRating: number;
 };
 
