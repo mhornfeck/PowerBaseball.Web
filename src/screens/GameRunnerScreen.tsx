@@ -1,6 +1,7 @@
 // /screens/GameRunnerScreen.tsx
 import "./GameRunnerScreen.css";
 import Button from "../components/button/Button";
+import Scoreboard from "../components/scoreboard/Scoreboard";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -9,10 +10,12 @@ type GameRunnerScreenProps = {
 export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   return (
     <div className="game-runner-container">
-      <img src="/images/baseball-field.png" alt="Baseball Field" className="field-image" />
-      
-      {/* Overlay text / debug */}
-      <div className="overlay-text">RUN IT BACK</div>
+      <Scoreboard
+        awayTeam="Sluggers"
+        homeTeam="Mashers"
+        awayScores={[1, 0, 2, 0, 1]}
+        homeScores={[0, 1, 0, 2, 0]}
+      />
 
       {/* Example Back button */}
       <div className="menu">

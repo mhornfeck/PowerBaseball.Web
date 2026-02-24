@@ -1,0 +1,52 @@
+/* .scoreboard-container {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+    overflow-x: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+} */
+
+.scoreboard-container {
+  display: flex;
+    justify-content: center;
+    margin: 16px 0;
+    overflow-x: auto;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  color: white;
+}
+
+.scoreboard-inner {
+  display: flex;
+  justify-content: center;
+  gap: 16px; /* <-- THIS is your clean spacing */
+}
+
+.innings-table,
+.totals-table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.totals-table {
+    color: #ffd700;
+}
+
+.innings-table th,
+.innings-table td,
+.totals-table th,
+.totals-table td {
+  border: 1px solid white;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.team-name {
+  text-align: left;
+  padding-left: 8px;
+  font-weight: bold;
+}
