@@ -33,6 +33,11 @@
   opacity: 0.8;
 }
 
+.lineup-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1); /* subtle hover */
+  cursor: pointer;
+}
+
 .current-batter {
   background: rgba(255, 215, 0, 0.25);
   box-shadow: inset 0 0 8px rgba(255, 215, 0, 0.6);

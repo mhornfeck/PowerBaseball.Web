@@ -1,22 +1,18 @@
+import { PlayerLine } from "../../types/game";
 import "./LineupPanel.css";
-
-type PlayerLine = {
-  jerseyNumber: number;
-  name: string;
-  hits: number;
-  atBats: number;
-};
 
 type LineupPanelProps = {
   teamName: string;
   players: PlayerLine[];
   currentBatterId?: number;
+  onPlayerClick: (player: PlayerLine | null) => void;
 };
 
 export default function LineupPanel({
   teamName,
   players,
   currentBatterId,
+  onPlayerClick
 }: LineupPanelProps) {
   return (
     <div className="lineup-panel">
@@ -38,6 +34,7 @@ export default function LineupPanel({
               <tr
                 key={player.jerseyNumber}
                 className={isCurrent ? "current-batter" : ""}
+                onClick={() => onPlayerClick(player)}
               >
                 <td>{player.jerseyNumber}</td>
                 <td>{player.name}</td>
