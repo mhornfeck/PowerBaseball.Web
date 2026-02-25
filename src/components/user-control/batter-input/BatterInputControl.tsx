@@ -32,24 +32,18 @@ export default function BatterInputControl({ onSubmit }: BatterInputProps) {
       <SelectPitchTypePanel
         onSelect={(pitchType: PitchType) => {
           setSelectedPitchType(pitchType);
-          setPhase("SelectPitchLocation"); // later
+          setPhase("SelectPitchLocation");
         }}
       />
     );
   }
 
-  // placeholder until you build it
   if (phase === "SelectPitchLocation") {
     return (
       <SelectPitchLocationPanel
         onSelect={(location) => {
           console.log("Pitch chosen:", selectedPitchType, location);
-
-          // 🔥 THIS is where you POST to API
-          // Combine pitchType + location into your PitcherInputEventRequest
-
           handleConfirm(location);
-          //setPhase("SelectPitchType");
         }}
       />
     );

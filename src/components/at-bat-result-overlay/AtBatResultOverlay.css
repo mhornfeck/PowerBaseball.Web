@@ -1,6 +1,6 @@
 .atbat-result-overlay {
   position: absolute;
-  top: 20%; /* adjust depending on scoreboard height */
+  top: 25%; /* adjust depending on scoreboard height */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;

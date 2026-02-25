@@ -1,3 +1,4 @@
+import { useGame } from "../../context/GameContext";
 import { PlayerLine } from "../../types/game";
 import "./LineupPanel.css";
 
@@ -14,10 +15,14 @@ export default function LineupPanel({
   currentBatterId,
   onPlayerClick
 }: LineupPanelProps) {
-  return (
-    <div className="lineup-panel">
-      <h2 className="lineup-title">{teamName}</h2>
+  
+  const { game } = useGame();
+  const isTeamAtBat = game?.game.battingTeam?.city === teamName;
+  const activeClassName = (isTeamAtBat ? "active" : "inactive");
 
+  return (
+    <div className={"lineup-panel " + activeClassName}>
+      <h2 className={"lineup-title " + activeClassName}>{teamName}</h2>
       <table className="lineup-table">
         <thead>
           <tr>

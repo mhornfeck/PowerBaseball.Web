@@ -8,3 +8,8 @@ export interface PitchLocation {
   horizontal: PitchLocationHorizontal;
   vertical: PitchLocationVertical;
 }
+
+export interface PitchInput {
+  pitchType: PitchType;
+  location: PitchLocation;
+}

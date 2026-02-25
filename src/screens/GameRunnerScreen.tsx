@@ -10,7 +10,7 @@ import { Batter, GameEngineService } from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
-import { PitchLocation, PitchType } from "../types/pitch";
+import { PitchInput, PitchLocation, PitchType } from "../types/pitch";
 import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 
@@ -31,14 +31,11 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
     return <div>Loading game...</div>;
   }
 
-  const handleBatterInput = async (input: {
-    pitchType: PitchType;
-    location: PitchLocation;
-  }) => {
+  const handleInput = async (inputType: 'batter-input' | 'pitcher-input', input: PitchInput) => {
     setIsProcessingAtBat(true);
     try {
       await GameEngineService.postGameEngineEvent({
-        eventType: "batter-input",
+        eventType: inputType,
         gameId: game.gameId,
         playerId,
         pitchType: input.pitchType,
@@ -109,7 +106,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
       )}
 
       {!isProcessingAtBat && (
-        <UserControl onSubmitBatterInput={handleBatterInput} />
+        <UserControl onSubmitInput={handleInput} />
       )}
 
       {/* Example Back button */}
