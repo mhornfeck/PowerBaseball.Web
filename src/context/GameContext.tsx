@@ -1,21 +1,34 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import type { GameEngineData } from "../api/generated/models/GameEngineData";
+import { PlayerLine, AtBatResultType } from "../types/game";
 
 export type GameState = GameEngineData;
+export type AtBatResult = {
+  resultType: AtBatResultType;
+  batter: PlayerLine;
+};
 
 type GameContextType = {
   game: GameState | null;
   setGame: (game: GameState) => void;
   clearGame: () => void;
+  lastAtBatResult: AtBatResult | null;
+  setLastAtBatResult: (result: AtBatResult) => void;
+  clearLastAtBatResult: () => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [game, setGame] = useState<GameState | null>(null);
+  const [lastAtBatResult, setLastAtBatResult] = useState<AtBatResult | null>(
+    null,
+  );
 
   const clearGame = () => setGame(null);
+  const clearLastAtBatResult = () => setLastAtBatResult(null);
+
   const connectionRef = useRef<HubConnection | null>(null);
 
   useEffect(() => {
@@ -36,10 +49,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         connection.on("AtBatResolved", (snapshot) => {
           console.log("AtBatResolved received:", snapshot);
 
-          setGame((prev) => ({
-            ...prev,
-            ...snapshot.gameState, // or smarter merge depending on structure
-          }));
+          setLastAtBatResult(snapshot.atBatResult);
+          setTimeout(() => {
+            clearLastAtBatResult();
+          }, 3000);
         });
 
         connection.on("GameStateUpdated", (snapshot) => {
@@ -50,7 +63,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             ...snapshot.gameState,
           }));
         });
-
       })
       .catch((err) => console.error("SignalR connection error:", err));
 
@@ -60,7 +72,16 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <GameContext.Provider value={{ game, setGame, clearGame }}>
+    <GameContext.Provider
+      value={{
+        game,
+        setGame,
+        clearGame,
+        lastAtBatResult,
+        setLastAtBatResult,
+        clearLastAtBatResult,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

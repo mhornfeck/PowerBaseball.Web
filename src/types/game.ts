@@ -4,3 +4,5 @@ export type PlayerLine = {
   hits: number;
   atBats: number;
 };
+
+export type AtBatResultType = 'Out' | 'Single' | 'Double' | 'Triple' | 'Homerun';

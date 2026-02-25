@@ -12,6 +12,7 @@ import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
 import { PitchLocation, PitchType } from "../types/pitch";
 import atBatLoader from "../assets/baseball-loader.gif";
+import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -21,7 +22,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
   const [isProcessingAtBat, setIsProcessingAtBat] = useState<boolean>(false);
 
-  const { game } = useGame();
+  const { game, lastAtBatResult } = useGame();
   const { playerId } = usePlayer();
 
   console.log("Current Game State:", game?.currentState.stateType);
@@ -57,6 +58,12 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         awayScores={[0, 0, 0, 0, 0]}
         homeScores={[0, 0, 0, 0, 0]}
       />
+
+      {lastAtBatResult && (
+        <AtBatResultOverlay
+          result={lastAtBatResult}
+        />
+      )}
 
       <div className="lineups-container">
         <LineupPanel
