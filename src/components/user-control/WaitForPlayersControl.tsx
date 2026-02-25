@@ -4,7 +4,7 @@ import { useGame } from "../../context/GameContext"
 import { usePlayer } from "../../context/PlayerContext"
 
 export default function WaitForPlayersControl() {
-  const { game, setGame } = useGame();
+  const { game } = useGame();
   const { playerId } = usePlayer();
 
   const handleReady = async () => {
@@ -18,8 +18,7 @@ export default function WaitForPlayersControl() {
         playerId: playerId
     };
 
-    const updatedGame = await GameEngineService.postGameEngineEvent(request);
-    setGame(updatedGame);
+    await GameEngineService.postGameEngineEvent(request);
   };
 
   return (

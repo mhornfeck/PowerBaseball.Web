@@ -36,15 +36,15 @@ export default function SelectPitchLocationPanel({ onSelect }: Props) {
           />
           <button
             className="strikezone-cell"
-            onClick={() => handleLocationSelect("Inside", "Middle")}
+            onClick={() => handleLocationSelect("Inside", "Medium")}
           />
           <button
             className="strikezone-cell"
-            onClick={() => handleLocationSelect("Middle", "Middle")}
+            onClick={() => handleLocationSelect("Middle", "Medium")}
           />
           <button
             className="strikezone-cell"
-            onClick={() => handleLocationSelect("Outside", "Middle")}
+            onClick={() => handleLocationSelect("Outside", "Medium")}
           />
           <button
             className="strikezone-cell"

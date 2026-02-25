@@ -1,6 +1,6 @@
 export type PitchLocationHorizontal = "Inside" | "Middle" | "Outside";
 
-export type PitchLocationVertical = "High" | "Middle" | "Low";
+export type PitchLocationVertical = "High" | "Medium" | "Low";
 
 export type PitchType = "Fastball" | "Curveball" | "Slider";
 

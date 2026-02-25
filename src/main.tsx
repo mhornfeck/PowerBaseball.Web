@@ -13,11 +13,9 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-  <StrictMode>
-    <PlayerProvider>
-      <GameProvider>
-        <App />
-      </GameProvider>
-    </PlayerProvider>
-  </StrictMode>
+  <PlayerProvider>
+    <GameProvider>
+      <App />
+    </GameProvider>
+  </PlayerProvider>,
 );

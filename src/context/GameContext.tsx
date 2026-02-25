@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
-import type { GameEngineData } from '../api/generated/models/GameEngineData';
+import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import type { GameEngineData } from "../api/generated/models/GameEngineData";
 
-export type GameState = GameEngineData; 
+export type GameState = GameEngineData;
 
 type GameContextType = {
   game: GameState | null;
@@ -15,6 +16,48 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [game, setGame] = useState<GameState | null>(null);
 
   const clearGame = () => setGame(null);
+  const connectionRef = useRef<HubConnection | null>(null);
+
+  useEffect(() => {
+    if (connectionRef.current) return;
+
+    const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7181/hubs/game") // adjust port
+      .withAutomaticReconnect()
+      .build();
+
+    connectionRef.current = connection;
+
+    connection
+      .start()
+      .then(() => {
+        console.log("SignalR Connected 🔥");
+
+        connection.on("AtBatResolved", (snapshot) => {
+          console.log("AtBatResolved received:", snapshot);
+
+          setGame((prev) => ({
+            ...prev,
+            ...snapshot.gameState, // or smarter merge depending on structure
+          }));
+        });
+
+        connection.on("GameStateUpdated", (snapshot) => {
+          console.log("GameStateUpdated received:", snapshot);
+
+          setGame((prev) => ({
+            ...prev,
+            ...snapshot.gameState,
+          }));
+        });
+
+      })
+      .catch((err) => console.error("SignalR connection error:", err));
+
+    return () => {
+      connection.stop();
+    };
+  }, []);
 
   return (
     <GameContext.Provider value={{ game, setGame, clearGame }}>
