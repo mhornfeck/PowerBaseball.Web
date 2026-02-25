@@ -1,6 +1,6 @@
 .btn {
   padding: 12px 24px;
-  font-size: 18px;
+  font-size: small;
   cursor: pointer;
   border-radius: 6px;
   border: none;
@@ -10,7 +10,6 @@
 .btn-transparent {
   background-color: rgba(0, 0, 0, 0); 
   color: #ff0000; 
-  font-size: x-small;
   border: 2px solid currentcolor;
   border-radius: 8px;
   padding: 10px 20px;
@@ -24,10 +23,9 @@
 }
 
 .btn-primary {
-  background-color: #ff0000; 
+  background-color: #c70000; 
   color: #ffffff; 
-  font-size: x-small;
-  border: 2px solid #ff0000;
+  border: 2px solid #c70000;
   border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
@@ -36,5 +34,5 @@
 
 .btn-primary:hover {
   /* Hover state: Slightly opaque (e.g., 20% black) */
-  background-color: #a80505
+  background-color: #ff0000;
 }

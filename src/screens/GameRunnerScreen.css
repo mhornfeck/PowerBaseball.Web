@@ -33,3 +33,17 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.processing-overlay {
+  position: absolute;
+  inset: 0;                 /* fills entire parent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6); /* optional dramatic dim */
+  z-index: 1000;
+}
+
+.processing-overlay img {
+  width: 200px; /* adjust to taste */
+}

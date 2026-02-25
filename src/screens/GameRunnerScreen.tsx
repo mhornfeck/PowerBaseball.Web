@@ -5,10 +5,13 @@ import Scoreboard from "../components/scoreboard/Scoreboard";
 import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
 import { useGame } from "../context/GameContext";
-import { Batter } from "../api/generated";
+import { usePlayer } from "../context/PlayerContext";
+import { Batter, GameEngineService } from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
+import { PitchLocation, PitchType } from "../types/pitch";
+import atBatLoader from "../assets/baseball-loader.gif";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -16,14 +19,35 @@ type GameRunnerScreenProps = {
 
 export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
+  const [isProcessingAtBat, setIsProcessingAtBat] = useState<boolean>(false);
 
   const { game } = useGame();
+  const { playerId } = usePlayer();
 
   console.log("Current Game State:", game?.currentState.stateType);
 
   if (!game) {
     return <div>Loading game...</div>;
   }
+
+  const handleBatterInput = async (input: {
+    pitchType: PitchType;
+    location: PitchLocation;
+  }) => {
+    setIsProcessingAtBat(true);
+    try {
+      await GameEngineService.postGameEngineEvent({
+        eventType: "batter-input",
+        gameId: game.gameId,
+        playerId,
+        pitchType: input.pitchType,
+        pitchLocationHorizontal: input.location.horizontal,
+        pitchLocationVertical: input.location.vertical,
+      });
+    } finally {
+      setIsProcessingAtBat(false);
+    }
+  };
 
   return (
     <div className="game-runner-container">
@@ -71,7 +95,15 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         )}
       </div>
 
-      <UserControl />
+      {isProcessingAtBat && (
+        <div className="processing-overlay">
+          <img src={atBatLoader} alt="Processing at bat..." />
+        </div>
+      )}
+
+      {!isProcessingAtBat && (
+        <UserControl onSubmitBatterInput={handleBatterInput} />
+      )}
 
       {/* Example Back button */}
       <div className="menu">
