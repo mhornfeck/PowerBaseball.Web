@@ -22,7 +22,13 @@ export default function LineupPanel({
 
   return (
     <div className={"lineup-panel " + activeClassName}>
-      <h2 className={"lineup-title " + activeClassName}>{teamName}</h2>
+      <div className="lineup-title-container">
+      <span className={"lineup-title " + activeClassName}>{teamName}</span>
+      {
+        isTeamAtBat &&
+        <i className="fa-solid fa-baseball-bat-ball active-icon"></i>
+      }
+      </div>
       <table className="lineup-table">
         <thead>
           <tr>

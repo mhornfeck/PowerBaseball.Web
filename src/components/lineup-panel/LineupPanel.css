@@ -9,13 +9,25 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
 }
 
+.lineup-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.lineup-title-container .active-icon {
+  color: red;
+}
+
 .lineup-panel.active {
   border: 3px gold solid;
 }
 
 .lineup-title {
-  text-align: center;
-  margin-bottom: 12px;
+  font-weight: bold;
 }
 
 .lineup-title.active {

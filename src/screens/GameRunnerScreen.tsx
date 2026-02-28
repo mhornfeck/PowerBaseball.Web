@@ -13,6 +13,7 @@ import UserControl from "../components/user-control/UserControl";
 import { PitchInput, PitchLocation, PitchType } from "../types/pitch";
 import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
+import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -49,12 +50,15 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
 
   return (
     <div className="game-runner-container">
-      <Scoreboard
-        awayTeam={game.away.team.city!}
-        homeTeam={game.home.team.city!}
-        awayScores={[0, 0, 0, 0, 0]}
-        homeScores={[0, 0, 0, 0, 0]}
-      />
+      <div className="scoreboard-layout">
+        <Scoreboard
+          awayTeam={game.away.team.city!}
+          homeTeam={game.home.team.city!}
+          awayScores={[0, 0, 0, 0, 0]}
+          homeScores={[0, 0, 0, 0, 0]}
+        />
+        <BaseRunnersPanel />
+      </div>
 
       {lastAtBatResult && (
         <AtBatResultOverlay

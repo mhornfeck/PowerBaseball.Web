@@ -1,0 +1,55 @@
+.bases-panel {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.diamond {
+  position: relative;
+  width: 150px;
+  height: 120px;
+}
+
+.base {
+  width: 36px;
+  height: 36px;
+  background: white;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Occupied base */
+.base.occupied {
+  background: red;
+  color: white;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+}
+
+/* Positioning */
+.second {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.third {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.first {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

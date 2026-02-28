@@ -11,6 +11,12 @@
   justify-content: flex-start; /* scoreboard at top */
 }
 
+.scoreboard-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
 .field-image {
   width: 100%;
   height: 100%;
