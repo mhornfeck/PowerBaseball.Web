@@ -1,38 +1,88 @@
-import { TeamListingModel } from "../../api/generated";
+import { useState } from "react";
+import { Team, TeamListingModel } from "../../api/generated";
 import "./TeamSelection.css";
+import Button from "../button/Button";
 
 interface TeamSelectionProps {
   teams: TeamListingModel[];
-  selectedTeamId?: string;
-  onChange: (team: TeamListingModel) => void;
-};
+  onSubmit: (home: TeamListingModel, away: TeamListingModel) => void;
+}
 
-export default function TeamSelection({
-  teams,
-  selectedTeamId,
-  onChange,
-}: TeamSelectionProps) {
+export default function TeamSelection({ teams, onSubmit }: TeamSelectionProps) {
+  const [homeTeam, setHomeTeam] = useState<TeamListingModel | undefined>(
+    undefined,
+  );
+
+  const [awayTeam, setAwayTeam] = useState<TeamListingModel | undefined>(
+    undefined,
+  );
+
+  const onClickSubmit = () => {
+    if (homeTeam && awayTeam) {
+      onSubmit(homeTeam, awayTeam);
+    }
+  }
+
   return (
     <div className="team-selection">
       {teams.length === 0 ? (
         <p>No teams available</p>
       ) : (
-        <select
-          value={selectedTeamId ?? ""}
-          onChange={(e) => {
-            const selected = teams.find(
-              (t) => t.id === e.target.value
-            );
-            if (selected) onChange(selected);
-          }}
-        >
-          <option value="">Select a team</option>
-          {teams.map((team) => (
-            <option key={team.id} value={team.id}>
-              {team.city} {team.name} ({team.overallRating})
-            </option>
-          ))}
-        </select>
+        <>
+          <div className="team-selectors">
+            <div className="team-selector">
+              <h3>Home Team</h3>
+              {homeTeam && (
+                <div className="selected-team">
+                  {homeTeam.city} {homeTeam.name}
+                </div>
+              )}
+              {!homeTeam && (
+                <select
+                  onChange={(e) => {
+                    const selected = teams.find((t) => t.id === e.target.value);
+                    setHomeTeam(selected);
+                  }}
+                >
+                  <option value="">Select a team</option>
+                  {teams.map((team) => (
+                    <option key={team.id} value={team.id}>
+                      {team.city} {team.name} ({team.overallRating})
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+            <div className="team-selector">
+              <h3>Away Team</h3>
+              {awayTeam && (
+                <div className="selected-team">
+                  {awayTeam.city} {awayTeam.name}
+                </div>
+              )}
+              {!awayTeam && (
+                <select
+                  onChange={(e) => {
+                    const selected = teams.find((t) => t.id === e.target.value);
+                    setAwayTeam(selected);
+                  }}
+                >
+                  <option value="">Select a team</option>
+                  {teams.map((team) => (
+                    <option key={team.id} value={team.id}>
+                      {team.city} {team.name} ({team.overallRating})
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </div>
+          <div className="buttons-container">
+            <Button variant="primary" disabled={!homeTeam || !awayTeam} onClick={onClickSubmit}>
+              OK
+            </Button>
+          </div>
+        </>
       )}
     </div>
   );

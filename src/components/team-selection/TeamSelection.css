@@ -14,8 +14,20 @@
   box-shadow: 0 0 5px rgba(30, 58, 138, 0.5);
 }
 
+.team-selectors {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.team-selectors .team-selector {
+  min-width: 260px;
+  flex: 1 1 200px;
+}
+
 .teams-container {
-    margin-bottom: 20px;;
+    margin-bottom: 20px;
 }
 
 .teams-container--group {
