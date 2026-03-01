@@ -14,5 +14,6 @@ export type Team = {
     statistics?: BattingStatistics;
     currentBatter?: Batter2;
     score?: number;
+    boxScore?: Array<number | null>;
 };
 

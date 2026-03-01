@@ -2,21 +2,36 @@
 import { useGame } from "../../context/GameContext";
 import "./Scoreboard.css";
 
-type ScoreboardProps = {
-  awayTeam: string;
-  homeTeam: string;
-  awayScores: number[]; // length = 5
-  homeScores: number[]; // length = 5
-};
-
-export default function Scoreboard({
-  awayTeam,
-  homeTeam,
-  awayScores,
-  homeScores,
-}: ScoreboardProps) {
+export default function Scoreboard() {
   const { game } = useGame();
   const currentInning = game?.game.inning;
+  const awayTeam = game?.game.awayTeam;
+  const homeTeam = game?.game.homeTeam;
+
+  const max =
+    currentInning?.inningNumber! <= 5 ? 5 : currentInning?.inningNumber!;
+  const innings = Array.from({ length: max }, (_, i) => i + 1);
+
+  // Helper function
+  function formatInningDisplay() {
+    if (!game?.game) return "";
+
+    const { isFinal, inning } = game.game;
+    if (isFinal) {
+      // If extra innings, show FINAL/inningNumber
+      return inning?.inningNumber! > 5
+        ? `FINAL/${inning?.inningNumber}`
+        : "FINAL";
+    }
+
+    // Not final: TOP or BOT + inning number
+    const half = inning?.inningHalf;
+    const num = inning?.inningNumber;
+    if (half === 0) return `TOP ${num}`;
+    if (half === 1) return `BOT ${num}`;
+
+    return ""; // fallback if data is weird
+  }
 
   return (
     // Scoreboard.tsx (relevant portion)
@@ -28,22 +43,42 @@ export default function Scoreboard({
           <thead>
             <tr>
               <th></th>
-              {[1, 2, 3, 4, 5].map((inning) => (
+              {innings.map((inning) => (
                 <th key={inning}>{inning}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="team-name">{awayTeam}</td>
-              {awayScores.map((s, i) => (
-                <td key={i} className={(currentInning?.inningHalf === 0 && currentInning?.inningNumber === i + 1) ? "active" : ""}> </td>
+              <td className="team-name">{awayTeam?.city}</td>
+              {awayTeam?.boxScore?.map((s, i) => (
+                <td
+                  key={i}
+                  className={
+                    currentInning?.inningHalf === 0 &&
+                    currentInning?.inningNumber === i + 1
+                      ? "active"
+                      : ""
+                  }
+                >
+                  {s}
+                </td>
               ))}
             </tr>
             <tr>
-              <td className="team-name">{homeTeam}</td>
-              {homeScores.map((s, i) => (
-                <td key={i} className={(currentInning?.inningHalf === 1 && currentInning?.inningNumber === i + 1) ? "active" : ""}> </td>
+              <td className="team-name">{homeTeam?.city}</td>
+              {homeTeam?.boxScore?.map((s, i) => (
+                <td
+                  key={i}
+                  className={
+                    currentInning?.inningHalf === 1 &&
+                    currentInning?.inningNumber === i + 1
+                      ? "active"
+                      : ""
+                  }
+                >
+                  {s}
+                </td>
               ))}
             </tr>
           </tbody>
@@ -72,8 +107,7 @@ export default function Scoreboard({
       {/* 🔥 NEW: Inning + Outs Row */}
       <div className="inning-status">
         <div className="inning-display">
-          {game?.game.inning?.inningHalf === 0 ? "TOP" : "BOT"}{" "}
-          {game?.game.inning?.inningNumber}
+          {formatInningDisplay()}
         </div>
 
         <div className="outs-display">
@@ -82,7 +116,7 @@ export default function Scoreboard({
             <div
               key={i}
               className={`out-circle ${
-                ((game?.game.outs ?? 0) > i) ? "active" : ""
+                (game?.game.outs ?? 0) > i ? "active" : ""
               }`}
             />
           ))}
