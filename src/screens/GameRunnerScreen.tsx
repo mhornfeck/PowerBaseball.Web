@@ -21,9 +21,8 @@ type GameRunnerScreenProps = {
 
 export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
-  const [isProcessingAtBat, setIsProcessingAtBat] = useState<boolean>(false);
 
-  const { game, lastAtBatResult } = useGame();
+  const { game, lastAtBatResult, isAtBatProcessing } = useGame();
   const { playerId } = usePlayer();
 
   console.log("Current Game State:", game?.currentState.stateType);
@@ -33,7 +32,6 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   }
 
   const handleInput = async (inputType: 'batter-input' | 'pitcher-input', input: PitchInput) => {
-    setIsProcessingAtBat(true);
     try {
       await GameEngineService.postGameEngineEvent({
         eventType: inputType,
@@ -43,20 +41,15 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         pitchLocationHorizontal: input.location.horizontal,
         pitchLocationVertical: input.location.vertical,
       });
-    } finally {
-      setIsProcessingAtBat(false);
+    } catch {
+      console.error('Error posting game engine event.');
     }
   };
 
   return (
     <div className="game-runner-container">
       <div className="scoreboard-layout">
-        <Scoreboard
-          awayTeam={game.away.team.city!}
-          homeTeam={game.home.team.city!}
-          awayScores={[0, 0, 0, 0, 0]}
-          homeScores={[0, 0, 0, 0, 0]}
-        />
+        <Scoreboard />
         <BaseRunnersPanel />
       </div>
 
@@ -103,13 +96,13 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         )}
       </div>
 
-      {isProcessingAtBat && (
+      {isAtBatProcessing && (
         <div className="processing-overlay">
           <img src={atBatLoader} alt="Processing at bat..." />
         </div>
       )}
 
-      {!isProcessingAtBat && (
+      {!isAtBatProcessing && (
         <UserControl onSubmitInput={handleInput} />
       )}
 

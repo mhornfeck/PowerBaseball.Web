@@ -14,6 +14,7 @@ type GameContextType = {
   setGame: (game: GameState) => void;
   clearGame: () => void;
   lastAtBatResult: AtBatResult | null;
+  isAtBatProcessing: boolean;
   setLastAtBatResult: (result: AtBatResult) => void;
   clearLastAtBatResult: () => void;
 };
@@ -25,6 +26,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [lastAtBatResult, setLastAtBatResult] = useState<AtBatResult | null>(
     null,
   );
+  const [isAtBatProcessing, setIsAtBatProcessing] = useState<boolean>(false);
 
   const clearGame = () => setGame(null);
   const clearLastAtBatResult = () => setLastAtBatResult(null);
@@ -50,17 +52,19 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           console.log("AtBatResolved received:", snapshot);
 
           setLastAtBatResult(snapshot.atBatResult);
-          setTimeout(() => {
-            clearLastAtBatResult();
-          }, 3000);
+          setIsAtBatProcessing(false);
         });
 
         connection.on("GameStateUpdated", (snapshot) => {
           console.log("GameStateUpdated received:", snapshot);
 
+          setIsAtBatProcessing(snapshot.stateType === 'ResolveAtBat');
+
+          clearLastAtBatResult();
+
           setGame((prev) => ({
             ...prev,
-            ...snapshot.gameState,
+            ...snapshot.data,
           }));
         });
       })
@@ -78,6 +82,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setGame,
         clearGame,
         lastAtBatResult,
+        isAtBatProcessing,
         setLastAtBatResult,
         clearLastAtBatResult,
       }}
