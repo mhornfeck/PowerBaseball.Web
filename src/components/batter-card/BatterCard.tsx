@@ -36,9 +36,13 @@ export const BatterCard: React.FC<BatterCardProps> = ({
 
       <div className="batter-atbats">
         <div className="section-label">At Bats</div>
-        <ul className="atbat-log">
+        <ul className={"atbat-log" + (batter.log?.entries?.length === 0 ? " empty" : "")}>
+          {
+            batter.log?.entries?.length === 0 &&
+            <li className="empty-state">{"No plate appearances."}</li>
+          }
           {batter.log?.entries?.map((entry: BattingLogEntry, index: number) => (
-            <li key={index}>{entry.displayString}</li>
+            <li key={index}><strong>{entry.inning}: </strong><span className={"result " + entry.resultType?.toLowerCase()}>{entry.resultType}</span></li>
           ))}
         </ul>
       </div>

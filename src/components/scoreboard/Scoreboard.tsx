@@ -27,8 +27,8 @@ export default function Scoreboard() {
     // Not final: TOP or BOT + inning number
     const half = inning?.inningHalf;
     const num = inning?.inningNumber;
-    if (half === 0) return `TOP ${num}`;
-    if (half === 1) return `BOT ${num}`;
+    if (half === "Top") return `TOP ${num}`;
+    if (half === "Bottom") return `BOT ${num}`;
 
     return ""; // fallback if data is weird
   }
@@ -55,7 +55,7 @@ export default function Scoreboard() {
                 <td
                   key={i}
                   className={
-                    currentInning?.inningHalf === 0 &&
+                    currentInning?.inningHalf === "Top" &&
                     currentInning?.inningNumber === i + 1
                       ? "active"
                       : ""
@@ -71,7 +71,7 @@ export default function Scoreboard() {
                 <td
                   key={i}
                   className={
-                    currentInning?.inningHalf === 1 &&
+                    currentInning?.inningHalf === "Bottom" &&
                     currentInning?.inningNumber === i + 1
                       ? "active"
                       : ""

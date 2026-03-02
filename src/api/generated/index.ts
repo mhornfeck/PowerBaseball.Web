@@ -8,7 +8,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AtBatInput } from './models/AtBatInput';
-export type { AtBatResultType } from './models/AtBatResultType';
+export { AtBatResultType } from './models/AtBatResultType';
 export type { Batter } from './models/Batter';
 export type { Batter2 } from './models/Batter2';
 export type { BatterAttributes } from './models/BatterAttributes';
@@ -28,7 +28,7 @@ export type { GamePlayer } from './models/GamePlayer';
 export type { GameTeam } from './models/GameTeam';
 export type { GameTeamMode } from './models/GameTeamMode';
 export type { Inning } from './models/Inning';
-export type { InningHalf } from './models/InningHalf';
+export { InningHalf } from './models/InningHalf';
 export type { Lineup } from './models/Lineup';
 export type { LoadGameRequest } from './models/LoadGameRequest';
 export type { NewGameResponse } from './models/NewGameResponse';

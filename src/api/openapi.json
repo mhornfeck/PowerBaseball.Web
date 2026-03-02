@@ -176,7 +176,13 @@
         }
       },
       "AtBatResultType": {
-        "type": "integer"
+        "enum": [
+          "Out",
+          "Single",
+          "Double",
+          "Triple",
+          "Homerun"
+        ]
       },
       "Batter": {
         "required": [
@@ -609,7 +615,10 @@
         }
       },
       "InningHalf": {
-        "type": "integer"
+        "enum": [
+          "Top",
+          "Bottom"
+        ]
       },
       "Lineup": {
         "type": "object",

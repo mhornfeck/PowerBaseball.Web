@@ -2,4 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type AtBatResultType = number;
+export enum AtBatResultType {
+    OUT = 'Out',
+    SINGLE = 'Single',
+    DOUBLE = 'Double',
+    TRIPLE = 'Triple',
+    HOMERUN = 'Homerun',
+}

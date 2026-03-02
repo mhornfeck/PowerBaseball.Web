@@ -100,7 +100,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         <div
           className={
             "batter-card-container " +
-            (game.game.inning?.inningHalf === 0 ? "away" : "home")
+            (game.game.inning?.inningHalf === "Top" ? "away" : "home")
           }
         >
           <BatterCard batter={game.game.battingTeam?.currentBatter!} />

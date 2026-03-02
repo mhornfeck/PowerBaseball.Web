@@ -54,9 +54,20 @@
   width: 200px; /* adjust to taste */
 }
 
+.lineups-container {
+  position: absolute;
+  top: 60px; /* below scoreboard */
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
 .batter-card-container {
   position: absolute;
-  top: 500px;
+  top: 425px;
 }
 
 .batter-card-container.away {

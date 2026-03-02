@@ -2,4 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type InningHalf = number;
+export enum InningHalf {
+    TOP = 'Top',
+    BOTTOM = 'Bottom',
+}

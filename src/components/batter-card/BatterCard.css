@@ -1,6 +1,6 @@
 .batter-card {
   width: 380px;
-  background: #111;
+  background: rgba(0,0,0,0.8);
   color: #fff;
   border-radius: 16px;
   padding: 20px;
@@ -59,7 +59,7 @@
 
 /* Today Section */
 .batter-today {
-  background: #1a1a1a;
+  background: rgba(50, 50, 50, 0.8);
   padding: 14px;
   border-radius: 12px;
   margin-bottom: 18px;
@@ -85,9 +85,25 @@
   gap: 10px;
 }
 
+.atbat-log.empty {
+  justify-content: center;
+}
+
 .atbat-log li {
   font-size: 14px;
   padding: 6px 0;
+}
+
+.atbat-log li .result{
+  color: yellow;
+}
+
+.atbat-log li .result.homerun{
+  color: #66ff33;
+}
+
+.atbat-log li .result.out{
+  color: #ff4444;
 }
 
 /* Season Grid */
@@ -98,7 +114,7 @@
 }
 
 .season-stat {
-  background: #1a1a1a;
+  background: rgba(50, 50, 50, 0.8);
   border-radius: 10px;
   padding: 10px;
   text-align: center;
