@@ -1,0 +1,115 @@
+.batter-card {
+  width: 380px;
+  background: #111;
+  color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Header */
+.batter-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.batter-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+}
+
+.batter-name-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.batter-jersey {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.batter-name {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.batter-name span {
+  font-weight: 800;
+}
+
+/* Section Label */
+.section-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+/* Today Section */
+.batter-today {
+  background: #1a1a1a;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.today-line {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* At Bat Log */
+.batter-atbats {
+  margin-bottom: 18px;
+}
+
+.atbat-log {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 120px;
+  overflow-y: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.atbat-log li {
+  font-size: 14px;
+  padding: 6px 0;
+}
+
+/* Season Grid */
+.season-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.season-stat {
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #888;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+}

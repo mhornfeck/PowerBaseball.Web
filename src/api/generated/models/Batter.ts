@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BatterAttributes } from './BatterAttributes';
+import type { BattingLog } from './BattingLog';
 import type { BattingStatistics } from './BattingStatistics';
 export type Batter = {
     firstName: string;
@@ -10,6 +11,7 @@ export type Batter = {
     jerseyNumber: number;
     attributes: BatterAttributes;
     statistics?: BattingStatistics;
+    log?: BattingLog;
     name?: string | null;
 };
 

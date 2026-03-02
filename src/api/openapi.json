@@ -175,6 +175,9 @@
           }
         }
       },
+      "AtBatResultType": {
+        "type": "integer"
+      },
       "Batter": {
         "required": [
           "firstName",
@@ -199,6 +202,9 @@
           },
           "statistics": {
             "$ref": "#/components/schemas/BattingStatistics"
+          },
+          "log": {
+            "$ref": "#/components/schemas/BattingLog"
           },
           "name": {
             "type": "string",
@@ -227,6 +233,7 @@
           },
           "attributes": { },
           "statistics": { },
+          "log": { },
           "name": {
             "type": "string",
             "nullable": true
@@ -272,6 +279,40 @@
           }
         },
         "nullable": true
+      },
+      "BattingLog": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BattingLogEntry"
+            }
+          }
+        }
+      },
+      "BattingLogEntry": {
+        "type": "object",
+        "properties": {
+          "inning": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resultType": {
+            "$ref": "#/components/schemas/AtBatResultType"
+          },
+          "runsBattedIn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scored": {
+            "type": "boolean"
+          },
+          "displayString": {
+            "type": "string",
+            "nullable": true
+          }
+        }
       },
       "BattingStatistics": {
         "type": "object",

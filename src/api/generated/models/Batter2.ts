@@ -8,6 +8,7 @@ export type Batter2 = {
     jerseyNumber: number;
     attributes: any;
     statistics?: any;
+    log?: any;
     name?: string | null;
 };
 

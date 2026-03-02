@@ -14,6 +14,7 @@ import { PitchInput, PitchLocation, PitchType } from "../types/pitch";
 import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
+import { BatterCard } from "../components/batter-card/BatterCard";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -31,7 +32,10 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
     return <div>Loading game...</div>;
   }
 
-  const handleInput = async (inputType: 'batter-input' | 'pitcher-input', input: PitchInput) => {
+  const handleInput = async (
+    inputType: "batter-input" | "pitcher-input",
+    input: PitchInput,
+  ) => {
     try {
       await GameEngineService.postGameEngineEvent({
         eventType: inputType,
@@ -42,7 +46,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         pitchLocationVertical: input.location.vertical,
       });
     } catch {
-      console.error('Error posting game engine event.');
+      console.error("Error posting game engine event.");
     }
   };
 
@@ -53,11 +57,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         <BaseRunnersPanel />
       </div>
 
-      {lastAtBatResult && (
-        <AtBatResultOverlay
-          result={lastAtBatResult}
-        />
-      )}
+      {lastAtBatResult && <AtBatResultOverlay result={lastAtBatResult} />}
 
       <div className="lineups-container">
         <LineupPanel
@@ -96,15 +96,24 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         )}
       </div>
 
+      {game.game.inning?.inningHalf !== undefined && (
+        <div
+          className={
+            "batter-card-container " +
+            (game.game.inning?.inningHalf === 0 ? "away" : "home")
+          }
+        >
+          <BatterCard batter={game.game.battingTeam?.currentBatter!} />
+        </div>
+      )}
+
       {isAtBatProcessing && (
         <div className="processing-overlay">
           <img src={atBatLoader} alt="Processing at bat..." />
         </div>
       )}
 
-      {!isAtBatProcessing && (
-        <UserControl onSubmitInput={handleInput} />
-      )}
+      {!isAtBatProcessing && <UserControl onSubmitInput={handleInput} />}
 
       {/* Example Back button */}
       <div className="menu">

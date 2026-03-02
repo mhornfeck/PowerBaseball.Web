@@ -53,3 +53,16 @@
 .processing-overlay img {
   width: 200px; /* adjust to taste */
 }
+
+.batter-card-container {
+  position: absolute;
+  top: 500px;
+}
+
+.batter-card-container.away {
+  left: 40px;
+}
+
+.batter-card-container.home {
+  right: 40px;
+}

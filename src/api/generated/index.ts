@@ -8,10 +8,13 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AtBatInput } from './models/AtBatInput';
+export type { AtBatResultType } from './models/AtBatResultType';
 export type { Batter } from './models/Batter';
 export type { Batter2 } from './models/Batter2';
 export type { BatterAttributes } from './models/BatterAttributes';
 export type { BatterInput } from './models/BatterInput';
+export type { BattingLog } from './models/BattingLog';
+export type { BattingLogEntry } from './models/BattingLogEntry';
 export type { BattingStatistics } from './models/BattingStatistics';
 export type { Game } from './models/Game';
 export type { GameEngineData } from './models/GameEngineData';
