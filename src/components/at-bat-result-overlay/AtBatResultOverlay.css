@@ -10,13 +10,6 @@
   padding: 60px;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 8px;
-
-  /* position: relative;
-  width: 200px;
-  height: 200px;
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%); */
 }
 
 .atbat-result-overlay.out {
