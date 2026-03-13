@@ -20,7 +20,7 @@
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
-  background: white;
+  background: transparent;
 }
 
 .text-input::placeholder {
@@ -30,9 +30,4 @@
 .text-input:focus {
   border-color: #4f46e5;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
-}
-
-.text-input:disabled {
-  background: #f2f4f7;
-  cursor: not-allowed;
 }

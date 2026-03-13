@@ -30,3 +30,8 @@
 .player-name {
   font-weight: 500;
 }
+
+.game-id-input {
+  min-width: 350px;
+  text-align: center;
+}

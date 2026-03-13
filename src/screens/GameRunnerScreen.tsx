@@ -95,6 +95,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
               <GamePlayersPanel
                 players={awayTeamHumanPlayers}
                 activePlayerId={game?.away?.activePlayer?.id}
+                gameId={game?.gameId}
               />
             )}
         </div>
@@ -105,6 +106,7 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
               <GamePlayersPanel
                 players={homeTeamHumanPlayers}
                 activePlayerId={game?.home?.activePlayer?.id}
+                gameId={game?.gameId}
               />
             )}
         </div>

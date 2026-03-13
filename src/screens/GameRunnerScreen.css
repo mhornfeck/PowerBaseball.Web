@@ -81,7 +81,7 @@
 .game-players-container--away {
   position: absolute;
   top: 20px;
-  left: 40px;
+  left: 500px;
 }
 
 .game-players-container--home {

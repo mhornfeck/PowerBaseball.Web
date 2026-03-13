@@ -4,7 +4,7 @@ import { ReactNode, MouseEventHandler } from "react";
 type ButtonProps = {
   children: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  variant?: "primary" | "transparent"; // add more variants if needed
+  variant?: "primary" | "transparent" | "link"; // add more variants if needed
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
 };
@@ -14,7 +14,7 @@ export default function Button({
   onClick,
   variant = "primary",
   type = "button",
-  disabled
+  disabled,
 }: ButtonProps) {
   return (
     <button
