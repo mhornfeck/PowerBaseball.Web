@@ -25,8 +25,9 @@ export type { GameEventRequestBatterInputEventRequest } from './models/GameEvent
 export type { GameEventRequestPitcherInputEventRequest } from './models/GameEventRequestPitcherInputEventRequest';
 export type { GameEventRequestPlayerReadyEventRequest } from './models/GameEventRequestPlayerReadyEventRequest';
 export type { GamePlayer } from './models/GamePlayer';
+export type { GamePlayer2 } from './models/GamePlayer2';
 export type { GameTeam } from './models/GameTeam';
-export type { GameTeamMode } from './models/GameTeamMode';
+export { GameTeamMode } from './models/GameTeamMode';
 export type { Inning } from './models/Inning';
 export { InningHalf } from './models/InningHalf';
 export type { Lineup } from './models/Lineup';

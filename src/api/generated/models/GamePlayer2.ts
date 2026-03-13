@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export enum GameTeamMode {
-    HUMAN = 'Human',
-    COMPUTER = 'Computer',
-}
+export type GamePlayer2 = {
+    id: string;
+    username: string;
+};
+

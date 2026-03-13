@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { GamePlayer } from './GamePlayer';
+import type { GamePlayer2 } from './GamePlayer2';
 import type { GameTeamMode } from './GameTeamMode';
 import type { Team } from './Team';
 export type GameTeam = {
@@ -10,5 +11,6 @@ export type GameTeam = {
     team: Team;
     mode: GameTeamMode;
     players: Array<GamePlayer> | null;
+    activePlayer?: GamePlayer2;
 };
 

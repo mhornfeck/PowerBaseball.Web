@@ -574,6 +574,23 @@
           }
         }
       },
+      "GamePlayer2": {
+        "required": [
+          "id",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "nullable": true
+      },
       "GameTeam": {
         "required": [
           "team",
@@ -598,11 +615,17 @@
               "$ref": "#/components/schemas/GamePlayer"
             },
             "nullable": true
+          },
+          "activePlayer": {
+            "$ref": "#/components/schemas/GamePlayer2"
           }
         }
       },
       "GameTeamMode": {
-        "type": "integer"
+        "enum": [
+          "Human",
+          "Computer"
+        ]
       },
       "Inning": {
         "type": "object",

@@ -6,7 +6,13 @@ import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
 import { useGame } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
-import { Batter, GameEngineService, GameEngineStateType } from "../api/generated";
+import {
+  Batter,
+  GameEngineService,
+  GameEngineStateType,
+  GameTeam,
+  GameTeamMode,
+} from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
@@ -15,7 +21,12 @@ import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
 import { BatterCard } from "../components/batter-card/BatterCard";
-import FinalScore, { FinalScoreProps } from "../components/final-score/FinalScore";
+import FinalScore, {
+  FinalScoreProps,
+} from "../components/final-score/FinalScore";
+import GamePlayersPanel, {
+  GamePlayer,
+} from "../components/game-players-panel/GamePlayersPanel";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -52,21 +63,52 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
   };
 
   function getFinalScore(): FinalScoreProps {
-      const home = game?.game.homeTeam!;
-      const away = game?.game.awayTeam!;
+    const home = game?.game.homeTeam!;
+    const away = game?.game.awayTeam!;
 
-      const winningTeam = home.score! > away.score! ? home : away;
-      const losingTeam = home.score! > away.score! ? away : home;
+    const winningTeam = home.score! > away.score! ? home : away;
+    const losingTeam = home.score! > away.score! ? away : home;
 
-      return {
-        winningTeamName: winningTeam.city!,
-        winningScore: winningTeam.score!,
-        losingScore: losingTeam.score!
-      };
+    return {
+      winningTeamName: winningTeam.city!,
+      winningScore: winningTeam.score!,
+      losingScore: losingTeam.score!,
+    };
   }
+
+  function getPlayers(team: GameTeam): Array<GamePlayer> | undefined {
+    return team.players?.map((player) => {
+      return { id: player.id, name: player.id };
+    });
+  }
+
+  const awayTeamHumanPlayers = getPlayers(game?.away);
+  const homeTeamHumanPlayers = getPlayers(game?.home);
 
   return (
     <div className="game-runner-container">
+      <div className="game-players-container">
+        <div className="game-players-container--away">
+          {game?.away.mode === GameTeamMode.HUMAN &&
+            awayTeamHumanPlayers &&
+            awayTeamHumanPlayers.length > 0 && (
+              <GamePlayersPanel
+                players={awayTeamHumanPlayers}
+                activePlayerId={game?.away?.activePlayer?.id}
+              />
+            )}
+        </div>
+        <div className="game-players-container--home">
+          {game?.home.mode === GameTeamMode.HUMAN &&
+            homeTeamHumanPlayers &&
+            homeTeamHumanPlayers.length > 0 && (
+              <GamePlayersPanel
+                players={homeTeamHumanPlayers}
+                activePlayerId={game?.home?.activePlayer?.id}
+              />
+            )}
+        </div>
+      </div>
       <div className="scoreboard-layout">
         <Scoreboard />
         <BaseRunnersPanel />
@@ -128,9 +170,9 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
         </div>
       )}
 
-      { game?.currentState.stateType === GameEngineStateType.GAME_END && 
+      {game?.currentState.stateType === GameEngineStateType.GAME_END && (
         <FinalScore {...getFinalScore()} />
-      }
+      )}
 
       {!isAtBatProcessing && <UserControl onSubmitInput={handleInput} />}
 

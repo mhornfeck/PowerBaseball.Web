@@ -3,11 +3,11 @@
   width: 100vw;
   height: 100vh; /* full viewport height */
   background-image: url("/images/baseball-field.png");
-  background-size: cover;      /* scale to fill container */
+  background-size: cover; /* scale to fill container */
   background-position: center; /* center the image */
   display: flex;
-  flex-direction: column;      /* stack scoreboard, game elements, menu */
-  align-items: center;         /* horizontally center children */
+  flex-direction: column; /* stack scoreboard, game elements, menu */
+  align-items: center; /* horizontally center children */
   justify-content: flex-start; /* scoreboard at top */
 }
 
@@ -42,7 +42,7 @@
 
 .processing-overlay {
   position: absolute;
-  inset: 0;                 /* fills entire parent */
+  inset: 0; /* fills entire parent */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,5 +75,17 @@
 }
 
 .batter-card-container.home {
+  right: 40px;
+}
+
+.game-players-container--away {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+}
+
+.game-players-container--home {
+  position: absolute;
+  top: 20px;
   right: 40px;
 }
