@@ -7,4 +7,6 @@ export enum GameEngineStateType {
     GET_PITCHER_INPUT = 'GetPitcherInput',
     GET_BATTER_INPUT = 'GetBatterInput',
     RESOLVE_AT_BAT = 'ResolveAtBat',
+    INNING_END = 'InningEnd',
+    GAME_END = 'GameEnd',
 }

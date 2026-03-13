@@ -1,13 +1,13 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import type { GameEngineData } from "../api/generated/models/GameEngineData";
-import { PlayerLine, AtBatResultType } from "../types/game";
+import {
+  AtBatResolvedSnapshot,
+  AtBatResult,
+  GameStateUpdatedSnapshot,
+} from "../broadcasting/snapshots";
 
 export type GameState = GameEngineData;
-export type AtBatResult = {
-  resultType: AtBatResultType;
-  batter: PlayerLine;
-};
 
 type GameContextType = {
   game: GameState | null;
@@ -48,32 +48,48 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       .then(() => {
         console.log("SignalR Connected 🔥");
 
-        connection.on("AtBatResolved", (snapshot) => {
+        connection.on("AtBatResolved", (snapshot: AtBatResolvedSnapshot) => {
           console.log("AtBatResolved received:", snapshot);
 
-          setLastAtBatResult(snapshot.atBatResult);
+          setLastAtBatResult(snapshot.result);
           setIsAtBatProcessing(false);
         });
 
-        connection.on("GameStateUpdated", (snapshot) => {
-          console.log("GameStateUpdated received:", snapshot);
+        connection.on(
+          "GameStateUpdated",
+          (snapshot: GameStateUpdatedSnapshot) => {
+            console.log("GameStateUpdated received:", snapshot);
 
-          setIsAtBatProcessing(snapshot.stateType === 'ResolveAtBat');
+            setIsAtBatProcessing(snapshot.stateType === "ResolveAtBat");
 
-          clearLastAtBatResult();
+            clearLastAtBatResult();
 
-          setGame((prev) => ({
-            ...prev,
-            ...snapshot.data,
-          }));
-        });
+            setGame(snapshot.data);
+          },
+        );
       })
       .catch((err) => console.error("SignalR connection error:", err));
+
+    connection.onreconnected(() => {
+      if (game?.gameId) {
+        connection.invoke("JoinGame", game.gameId);
+      }
+    });
 
     return () => {
       connection.stop();
     };
   }, []);
+
+  useEffect(() => {
+    const connection = connectionRef.current;
+    if (!connection || !game?.gameId) return;
+
+    connection
+      .invoke("JoinGame", game.gameId)
+      .then(() => console.log(`Joined game ${game.gameId}`))
+      .catch((err) => console.error("JoinGame failed:", err));
+  }, [game?.gameId]);
 
   return (
     <GameContext.Provider

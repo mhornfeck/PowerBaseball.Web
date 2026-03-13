@@ -461,7 +461,9 @@
           "WaitForPlayers",
           "GetPitcherInput",
           "GetBatterInput",
-          "ResolveAtBat"
+          "ResolveAtBat",
+          "InningEnd",
+          "GameEnd"
         ]
       },
       "GameEventRequest": {

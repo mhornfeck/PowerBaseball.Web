@@ -6,7 +6,7 @@ import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
 import { useGame } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
-import { Batter, GameEngineService } from "../api/generated";
+import { Batter, GameEngineService, GameEngineStateType } from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
@@ -15,6 +15,7 @@ import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
 import { BatterCard } from "../components/batter-card/BatterCard";
+import FinalScore, { FinalScoreProps } from "../components/final-score/FinalScore";
 
 type GameRunnerScreenProps = {
   onBack: () => void;
@@ -49,6 +50,20 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
       console.error("Error posting game engine event.");
     }
   };
+
+  function getFinalScore(): FinalScoreProps {
+      const home = game?.game.homeTeam!;
+      const away = game?.game.awayTeam!;
+
+      const winningTeam = home.score! > away.score! ? home : away;
+      const losingTeam = home.score! > away.score! ? away : home;
+
+      return {
+        winningTeamName: winningTeam.city!,
+        winningScore: winningTeam.score!,
+        losingScore: losingTeam.score!
+      };
+  }
 
   return (
     <div className="game-runner-container">
@@ -112,6 +127,10 @@ export default function GameRunnerScreen({ onBack }: GameRunnerScreenProps) {
           <img src={atBatLoader} alt="Processing at bat..." />
         </div>
       )}
+
+      { game?.currentState.stateType === GameEngineStateType.GAME_END && 
+        <FinalScore {...getFinalScore()} />
+      }
 
       {!isAtBatProcessing && <UserControl onSubmitInput={handleInput} />}
 

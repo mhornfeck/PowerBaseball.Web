@@ -1,5 +1,12 @@
 .buttons-container {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.game-type-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
