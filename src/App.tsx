@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TitleScreen from "./screens/TitleScreen";
 import GameSetupScreen from "./screens/GameSetupScreen";
-import { TeamSetup } from "./models/TeamSetup"
+import { TeamSetup } from "./models/TeamSetup";
 import "./App.css";
 import GameRunnerScreen from "./screens/GameRunnerScreen";
 import { GameEngineService } from "./api/generated";
@@ -20,32 +20,33 @@ export default function App() {
 
     const newGame = await GameEngineService.postGameEngineNew({
       homeTeam: {
-        id: teamSetup.homeTeam.teamId
+        id: teamSetup.homeTeam.teamId,
       },
       awayTeam: {
         id: teamSetup.awayTeam.teamId,
-        playerIds: [ playerId ]
-      }
-    })
+        playerIds: [playerId],
+      },
+    });
 
     if (newGame?.data) {
       setGame(newGame.data);
-      setScreen('game-runner');
+      setScreen("game-runner");
     }
-  }
+  };
 
   return (
     <>
-      {screen === "title" && (
-        <TitleScreen onStart={() => setScreen("setup")} />
-      )}
+      {screen === "title" && <TitleScreen onStart={() => setScreen("setup")} />}
 
       {screen === "setup" && (
-        <GameSetupScreen onBack={() => setScreen("title")} onDone={onTeamSetup} />
+        <GameSetupScreen
+          onBack={() => setScreen("title")}
+          onDone={onTeamSetup}
+        />
       )}
 
       {screen === "game-runner" && (
-        <GameRunnerScreen onBack={() => setScreen("setup")} />
+        <GameRunnerScreen onEndGame={() => setScreen("setup")} />
       )}
     </>
   );

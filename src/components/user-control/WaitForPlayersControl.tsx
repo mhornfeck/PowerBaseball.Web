@@ -1,7 +1,10 @@
-// components/WaitForPlayersControl.tsx
-import { GameEngineService, GameEventRequestPlayerReadyEventRequest } from "../../api/generated"
-import { useGame } from "../../context/GameContext"
-import { usePlayer } from "../../context/PlayerContext"
+import {
+  GameEngineService,
+  GameEventRequestPlayerReadyEventRequest,
+} from "../../api/generated";
+import { useGame } from "../../context/GameContext";
+import { usePlayer } from "../../context/PlayerContext";
+import "./WaitForPlayersControl.css";
 
 export default function WaitForPlayersControl() {
   const { game } = useGame();
@@ -9,20 +12,20 @@ export default function WaitForPlayersControl() {
 
   const handleReady = async () => {
     if (!game) {
-        return;
+      return;
     }
 
     const request: GameEventRequestPlayerReadyEventRequest = {
-        eventType: "player-ready",
-        gameId: game.gameId,
-        playerId: playerId
+      eventType: "player-ready",
+      gameId: game.gameId,
+      playerId: playerId,
     };
 
     await GameEngineService.postGameEngineEvent(request);
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: 400 }}>
+    <div className="wait-for-players-control panel">
       <button className="btn btn-primary" onClick={handleReady}>
         Ready
       </button>

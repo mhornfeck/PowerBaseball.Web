@@ -38,7 +38,7 @@ export default function GamePlayersPanel({
     }
   };
   return (
-    <div className="game-players-panel">
+    <div className="game-players-panel panel">
       <div className="players-container">
         {players.map((player) => {
           const isActive = player.id === activePlayerId;
@@ -57,7 +57,7 @@ export default function GamePlayersPanel({
       {gameId && (
         <>
           <div className="buttons-container">
-            <Button variant="link" onClick={onClickInvite}>
+            <Button variant="link" size="compact" onClick={onClickInvite}>
               Invite
             </Button>
           </div>
@@ -67,13 +67,17 @@ export default function GamePlayersPanel({
               setShowInviteDialog(false);
             }}
           >
-            <TextInput
-              value={gameId}
-              disabled={true}
-              className="game-id-input"
-            ></TextInput>
-            <div className="buttons-container">
-              <Button onClick={onClickCopyInviteCode}>Copy Invite Code</Button>
+            <div className="invite-dialog">
+              <TextInput
+                value={gameId}
+                disabled={true}
+                className="game-id-input"
+              ></TextInput>
+              <div className="buttons-container">
+                <Button onClick={onClickCopyInviteCode}>
+                  Copy Invite Code
+                </Button>
+              </div>
             </div>
           </Modal>
         </>

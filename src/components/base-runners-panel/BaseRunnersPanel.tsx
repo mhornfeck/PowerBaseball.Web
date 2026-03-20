@@ -7,7 +7,7 @@ export function BaseRunnersPanel() {
 
   const renderBase = (runner?: Batter2) => (
     <div className={`base ${runner ? "occupied" : ""}`}>
-      {runner ? runner.jerseyNumber : ""}
+      <span className="jersey-number">{runner ? runner.jerseyNumber : ""}</span>
     </div>
   );
 

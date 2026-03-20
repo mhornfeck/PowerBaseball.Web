@@ -1,91 +1,74 @@
+/* --- Root Layout --- */
+
 .game-runner-container {
-  position: relative;
+  height: 100vh;
   width: 100vw;
-  height: 100vh; /* full viewport height */
+
+  display: grid;
+
+  grid-template-columns: minmax(260px, 1fr) 3fr minmax(260px, 1fr);
+
+  gap: 16px;
+  padding: 16px;
+
   background-image: url("/images/baseball-field.png");
-  background-size: cover; /* scale to fill container */
-  background-position: center; /* center the image */
-  display: flex;
-  flex-direction: column; /* stack scoreboard, game elements, menu */
-  align-items: center; /* horizontally center children */
-  justify-content: flex-start; /* scoreboard at top */
+  background-size: cover;
+  background-position: center;
 }
 
-.scoreboard-layout {
+/* --- Side Columns --- */
+
+.team-column {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 12px;
+
+  height: 100%; /* fill container height */
+  min-height: 0; /* important for flex overflow handling */
 }
 
-.field-image {
+.panel {
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* scale nicely */
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
 }
 
-.overlay-text {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 36px;
-  color: white;
-  text-shadow: 1px 1px 4px black;
+.team-column .panel:first-child {
+  flex: 1; /* lineup expands/shrinks */
+  min-height: 0;
 }
 
-.game-runner-container .menu {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+/* --- Center Column --- */
+
+.center-column {
+  display: grid;
+
+  grid-template-rows: 0.25fr 0.75fr;
+
+  gap: 16px;
 }
 
-.processing-overlay {
-  position: absolute;
-  inset: 0; /* fills entire parent */
+/* --- Other Layout Parts --- */
+
+.scoreboard-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.game-display {
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6); /* optional dramatic dim */
-  z-index: 1000;
 }
 
-.processing-overlay img {
-  width: 200px; /* adjust to taste */
-}
-
-.lineups-container {
-  position: absolute;
-  top: 60px; /* below scoreboard */
-  left: 0;
-  right: 0;
-
-  display: flex;
-  justify-content: space-between;
-  padding: 0 40px;
-}
-
-.batter-card-container {
-  position: absolute;
-  top: 425px;
-}
-
-.batter-card-container.away {
-  left: 40px;
-}
-
-.batter-card-container.home {
-  right: 40px;
-}
-
-.game-players-container--away {
-  position: absolute;
-  top: 20px;
-  left: 500px;
-}
-
-.game-players-container--home {
-  position: absolute;
-  top: 20px;
-  right: 40px;
+.game-display .at-bat-processing-overlay img {
+  max-height: 200px;
+  max-width: 200px;
 }

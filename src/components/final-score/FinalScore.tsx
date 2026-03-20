@@ -6,12 +6,14 @@ export interface FinalScoreProps {
   winningTeamName: string;
   winningScore: number;
   losingScore: number;
+  onDone: () => void;
 }
 
 export default function FinalScore({
   winningTeamName,
   winningScore,
   losingScore,
+  onDone,
 }: FinalScoreProps) {
   return (
     <div className="final-score">
@@ -23,7 +25,7 @@ export default function FinalScore({
         </div>
       </div>
       <div className="buttons-container">
-        <Button>Done</Button>
+        <Button onClick={onDone}>Done</Button>
       </div>
       <Fireworks />
     </div>

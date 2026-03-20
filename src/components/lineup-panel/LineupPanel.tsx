@@ -13,28 +13,26 @@ export default function LineupPanel({
   teamName,
   players,
   currentBatterId,
-  onPlayerClick
+  onPlayerClick,
 }: LineupPanelProps) {
-  
   const { game } = useGame();
   const isTeamAtBat = game?.game.battingTeam?.city === teamName;
-  const activeClassName = (isTeamAtBat ? "active" : "inactive");
+  const activeClassName = isTeamAtBat ? "active" : "inactive";
 
   return (
-    <div className={"lineup-panel " + activeClassName}>
+    <div className={"lineup-panel panel " + activeClassName}>
       <div className="lineup-title-container">
-      <span className={"lineup-title " + activeClassName}>{teamName}</span>
-      {
-        isTeamAtBat &&
-        <i className="fa-solid fa-baseball-bat-ball active-icon"></i>
-      }
+        <span className={"lineup-title " + activeClassName}>{teamName}</span>
+        {isTeamAtBat && (
+          <i className="fa-solid fa-baseball-bat-ball active-icon"></i>
+        )}
       </div>
       <table className="lineup-table">
         <thead>
           <tr>
-            <th>#</th>
+            <th className="center">#</th>
             <th>Name</th>
-            <th>H-AB</th>
+            <th className="center">H-AB</th>
           </tr>
         </thead>
         <tbody>
@@ -47,9 +45,9 @@ export default function LineupPanel({
                 className={isCurrent ? "current-batter" : ""}
                 onClick={() => onPlayerClick(player)}
               >
-                <td>{player.jerseyNumber}</td>
+                <td className="center">{player.jerseyNumber}</td>
                 <td>{player.name}</td>
-                <td>
+                <td className="center">
                   {player.hits}-{player.atBats}
                 </td>
               </tr>

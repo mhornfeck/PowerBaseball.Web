@@ -1,24 +1,28 @@
 .batter-card {
-  width: 380px;
-  background: rgba(0,0,0,0.8);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
   color: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  font-family: system-ui, -apple-system, sans-serif;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 /* Header */
+
 .batter-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .batter-avatar {
-  width: 80px;
-  height: 80px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #333;
@@ -29,19 +33,19 @@
   flex-direction: column;
   flex: 1;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .batter-jersey {
-  font-size: 32px;
+  font-size: 20px;
   font-weight: bold;
   line-height: 1;
 }
 
 .batter-name {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .batter-name span {
@@ -49,40 +53,43 @@
 }
 
 /* Section Label */
+
 .section-label {
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
   color: #888;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
 }
 
 /* Today Section */
+
 .batter-today {
   background: rgba(50, 50, 50, 0.8);
-  padding: 14px;
-  border-radius: 12px;
-  margin-bottom: 18px;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .today-line {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
 }
 
 /* At Bat Log */
+
 .batter-atbats {
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 .atbat-log {
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 120px;
+  max-height: 70px;
   overflow-y: auto;
   display: flex;
-  gap: 10px;
+  gap: 6px;
 }
 
 .atbat-log.empty {
@@ -90,42 +97,56 @@
 }
 
 .atbat-log li {
-  font-size: 14px;
-  padding: 6px 0;
+  font-size: 12px;
+  padding: 2px 0;
 }
 
-.atbat-log li .result{
+.atbat-log li .result {
   color: yellow;
 }
 
-.atbat-log li .result.homerun{
+.atbat-log li .result.homerun {
   color: #66ff33;
 }
 
-.atbat-log li .result.out{
+.atbat-log li .result.out {
   color: #ff4444;
 }
 
-/* Season Grid */
-.season-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+/* Season Stats Bar */
+
+.season-stats-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(50, 50, 50, 0.8);
+  border-radius: 8px;
+
+  padding: 6px 10px;
+  margin-top: 6px;
   gap: 10px;
 }
 
 .season-stat {
-  background: rgba(50, 50, 50, 0.8);
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 9px;
   color: #888;
+  line-height: 1;
 }
 
 .stat-value {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+* {
+  box-sizing: border-box;
 }

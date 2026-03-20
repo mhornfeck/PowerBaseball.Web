@@ -68,7 +68,7 @@ export default function GameSetupScreen({
   };
 
   return (
-    <div>
+    <div className="game-setup-screen">
       <h1>Game Setup</h1>
 
       {step === "game-type-selection" && (
