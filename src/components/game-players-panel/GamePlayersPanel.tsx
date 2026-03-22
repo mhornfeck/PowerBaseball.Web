@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export type GamePlayer = {
   id: string;
-  name: string;
+  handle: string;
 };
 
 type Props = {
@@ -49,7 +49,7 @@ export default function GamePlayersPanel({
               className={`game-player ${isActive ? "active" : ""}`}
             >
               <img className="avatar" src={userAvatarDefault} alt="avatar" />
-              <span className="player-name">{player.name}</span>
+              <span className="player-name">{player.handle}</span>
             </div>
           );
         })}

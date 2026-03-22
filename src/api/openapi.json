@@ -91,6 +91,55 @@
         }
       }
     },
+    "/game-engine/join": {
+      "post": {
+        "tags": [
+          "GameEngine"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGameRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGameRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/game-engine/event": {
       "post": {
         "tags": [
@@ -422,7 +471,7 @@
           "home",
           "away",
           "game",
-          "currentState",
+          "currentStateData",
           "currentAtBatInput"
         ],
         "type": "object",
@@ -440,7 +489,7 @@
           "game": {
             "$ref": "#/components/schemas/Game"
           },
-          "currentState": {
+          "currentStateData": {
             "$ref": "#/components/schemas/GameEngineStateData"
           },
           "currentAtBatInput": {
@@ -591,6 +640,22 @@
         },
         "nullable": true
       },
+      "GamePlayerModel": {
+        "required": [
+          "id",
+          "handle"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "handle": {
+            "type": "string"
+          }
+        }
+      },
       "GameTeam": {
         "required": [
           "team",
@@ -644,6 +709,39 @@
           "Top",
           "Bottom"
         ]
+      },
+      "JoinGameRequest": {
+        "required": [
+          "gameId",
+          "playerId",
+          "playerHandle"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "playerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "playerHandle": {
+            "type": "string"
+          }
+        }
+      },
+      "JoinGameResponse": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GameEngineData"
+          }
+        }
       },
       "Lineup": {
         "type": "object",
@@ -792,11 +890,10 @@
           "id": {
             "type": "string"
           },
-          "playerIds": {
+          "players": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
+              "$ref": "#/components/schemas/GamePlayerModel"
             }
           }
         }

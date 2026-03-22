@@ -6,9 +6,14 @@ import Button from "../button/Button";
 interface TeamSelectionProps {
   teams: TeamListingModel[];
   onSubmit: (home: TeamListingModel, away: TeamListingModel) => void;
+  onBack: () => void;
 }
 
-export default function TeamSelection({ teams, onSubmit }: TeamSelectionProps) {
+export default function TeamSelection({
+  teams,
+  onSubmit,
+  onBack,
+}: TeamSelectionProps) {
   const [homeTeam, setHomeTeam] = useState<TeamListingModel | undefined>(
     undefined,
   );
@@ -21,7 +26,7 @@ export default function TeamSelection({ teams, onSubmit }: TeamSelectionProps) {
     if (homeTeam && awayTeam) {
       onSubmit(homeTeam, awayTeam);
     }
-  }
+  };
 
   return (
     <div className="team-selection">
@@ -78,7 +83,14 @@ export default function TeamSelection({ teams, onSubmit }: TeamSelectionProps) {
             </div>
           </div>
           <div className="buttons-container">
-            <Button variant="primary" disabled={!homeTeam || !awayTeam} onClick={onClickSubmit}>
+            <Button variant="transparent" onClick={onBack}>
+              Back
+            </Button>
+            <Button
+              variant="primary"
+              disabled={!homeTeam || !awayTeam}
+              onClick={onClickSubmit}
+            >
               OK
             </Button>
           </div>

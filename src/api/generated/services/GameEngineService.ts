@@ -3,6 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { GameEventRequest } from '../models/GameEventRequest';
+import type { JoinGameRequest } from '../models/JoinGameRequest';
+import type { JoinGameResponse } from '../models/JoinGameResponse';
 import type { LoadGameRequest } from '../models/LoadGameRequest';
 import type { NewGameResponse } from '../models/NewGameResponse';
 import type { StartGameRequest } from '../models/StartGameRequest';
@@ -36,6 +38,21 @@ export class GameEngineService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/game-engine/load',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns JoinGameResponse OK
+     * @throws ApiError
+     */
+    public static postGameEngineJoin(
+        requestBody: JoinGameRequest,
+    ): CancelablePromise<JoinGameResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/game-engine/join',
             body: requestBody,
             mediaType: 'application/json',
         });

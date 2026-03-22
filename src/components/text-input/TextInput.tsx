@@ -29,7 +29,7 @@ const TextInput: React.FC<TextInputProps> = ({
         type={type}
         value={value}
         placeholder={placeholder}
-        disabled={disabled}
+        disabled={disabled === true ? disabled : undefined}
         onChange={(e) => (onChange ? onChange(e.target.value) : undefined)}
       />
     </div>

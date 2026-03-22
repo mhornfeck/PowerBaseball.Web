@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { GamePlayerModel } from './GamePlayerModel';
-export type TeamControlModel = {
+export type GamePlayerModel = {
     id: string;
-    players?: Array<GamePlayerModel>;
+    handle: string;
 };
 

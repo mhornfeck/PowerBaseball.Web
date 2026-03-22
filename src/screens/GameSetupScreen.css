@@ -10,3 +10,9 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.join-game {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

@@ -11,7 +11,7 @@ export type GameEngineData = {
     home: GameTeam;
     away: GameTeam;
     game: Game;
-    currentState: GameEngineStateData;
+    currentStateData: GameEngineStateData;
     currentAtBatInput: AtBatInput;
 };
 

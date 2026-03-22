@@ -6,7 +6,10 @@ import BatterInputControl from "./batter-input/BatterInputControl";
 import WaitForPlayersControl from "./WaitForPlayersControl";
 
 interface UserControlProps {
-  onSubmitInput: (inputType: 'batter-input' | 'pitcher-input', data: PitchInput) => void;
+  onSubmitInput: (
+    inputType: "batter-input" | "pitcher-input",
+    data: PitchInput,
+  ) => void;
 }
 
 export default function UserControl({ onSubmitInput }: UserControlProps) {
@@ -15,21 +18,31 @@ export default function UserControl({ onSubmitInput }: UserControlProps) {
   if (!game) return null; // not loaded yet
 
   const onSubmitBatterInput = (data: PitchInput) => {
-    onSubmitInput('batter-input', data);
-  }
+    onSubmitInput("batter-input", data);
+  };
 
   const onSubmitPitcherInput = (data: PitchInput) => {
-    onSubmitInput('pitcher-input', data);
-  }
+    onSubmitInput("pitcher-input", data);
+  };
 
-  switch (game.currentState.stateType) {
+  switch (game.currentStateData.stateType) {
     case GameEngineStateType.WAIT_FOR_PLAYERS:
     case GameEngineStateType.INNING_END:
       return <WaitForPlayersControl />;
     case GameEngineStateType.GET_BATTER_INPUT:
-      return <BatterInputControl onSubmit={onSubmitBatterInput} />;
+      return (
+        <BatterInputControl
+          onSubmit={onSubmitBatterInput}
+          inputMode="batting"
+        />
+      );
     case GameEngineStateType.GET_PITCHER_INPUT:
-      return <BatterInputControl onSubmit={onSubmitPitcherInput} />;
+      return (
+        <BatterInputControl
+          onSubmit={onSubmitPitcherInput}
+          inputMode="pitching"
+        />
+      );
     default:
       return null;
   }

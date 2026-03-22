@@ -1,6 +1,11 @@
 export type TeamSlot = {
   teamId: string;
-  playerId?: string; // optional
+  player?: GamePlayer;
+};
+
+export type GamePlayer = {
+  id: string;
+  handle: string;
 };
 
 export class TeamSetup {
@@ -9,7 +14,7 @@ export class TeamSetup {
 
   constructor(
     homeTeam: TeamSlot = { teamId: "" },
-    awayTeam: TeamSlot = { teamId: "" }
+    awayTeam: TeamSlot = { teamId: "" },
   ) {
     this.homeTeam = homeTeam;
     this.awayTeam = awayTeam;

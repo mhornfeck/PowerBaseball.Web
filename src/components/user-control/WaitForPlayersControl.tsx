@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   GameEngineService,
   GameEventRequestPlayerReadyEventRequest,
@@ -10,10 +11,14 @@ export default function WaitForPlayersControl() {
   const { game } = useGame();
   const { playerId } = usePlayer();
 
+  const [isReady, setIsReady] = useState<boolean>(false);
+
   const handleReady = async () => {
     if (!game) {
       return;
     }
+
+    game.game.battingTeam?.id;
 
     const request: GameEventRequestPlayerReadyEventRequest = {
       eventType: "player-ready",
@@ -22,13 +27,22 @@ export default function WaitForPlayersControl() {
     };
 
     await GameEngineService.postGameEngineEvent(request);
+
+    setIsReady(true);
   };
 
   return (
     <div className="wait-for-players-control panel">
-      <button className="btn btn-primary" onClick={handleReady}>
-        Ready
-      </button>
+      {!isReady && (
+        <button className="btn btn-primary" onClick={handleReady}>
+          Ready
+        </button>
+      )}
+      {isReady && (
+        <div className="wait-for-players-text">
+          Waiting for other players...
+        </div>
+      )}
     </div>
   );
 }

@@ -26,10 +26,13 @@ export type { GameEventRequestPitcherInputEventRequest } from './models/GameEven
 export type { GameEventRequestPlayerReadyEventRequest } from './models/GameEventRequestPlayerReadyEventRequest';
 export type { GamePlayer } from './models/GamePlayer';
 export type { GamePlayer2 } from './models/GamePlayer2';
+export type { GamePlayerModel } from './models/GamePlayerModel';
 export type { GameTeam } from './models/GameTeam';
 export { GameTeamMode } from './models/GameTeamMode';
 export type { Inning } from './models/Inning';
 export { InningHalf } from './models/InningHalf';
+export type { JoinGameRequest } from './models/JoinGameRequest';
+export type { JoinGameResponse } from './models/JoinGameResponse';
 export type { Lineup } from './models/Lineup';
 export type { LoadGameRequest } from './models/LoadGameRequest';
 export type { NewGameResponse } from './models/NewGameResponse';

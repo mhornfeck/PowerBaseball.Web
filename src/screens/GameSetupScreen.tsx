@@ -5,23 +5,33 @@ import Button from "../components/button/Button";
 import { TeamSetup } from "../models/TeamSetup";
 import "./GameSetupScreen.css";
 import TextInput from "../components/text-input/TextInput";
+import { usePlayer } from "../context/PlayerContext";
 
 interface GameSetupScreenProps {
   onBack: () => void;
   onDone: (teamSetup: TeamSetup) => void;
+  onJoin: (gameId: string, playerHandle: string) => void;
 }
 
-type GameSetupStep = "game-type-selection" | "new-game" | "join-game";
+type GameSetupStep =
+  | "game-type-selection"
+  | "new-game"
+  | "new-game-player-select"
+  | "join-game";
 
 export default function GameSetupScreen({
   onBack,
   onDone,
+  onJoin,
 }: GameSetupScreenProps) {
   const [teams, setTeams] = useState<TeamListingModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [joinGameCode, setJoinGameCode] = useState("");
+  const [playerName, setPlayerName] = useState("");
 
   const [step, setStep] = useState<GameSetupStep>("game-type-selection");
+
+  const { setPlayerHandle, playerId } = usePlayer();
 
   const onSetTeams = (
     homeTeam: TeamListingModel,
@@ -37,17 +47,26 @@ export default function GameSetupScreen({
       },
       awayTeam: {
         teamId: awayTeam.id,
+        player: { id: playerId, handle: playerName },
       },
     };
 
+    setPlayerHandle(playerName);
     onDone(teamSetup);
   };
 
   const onClickBack = () => {
-    onBack();
+    if (step === "new-game-player-select" || step === "join-game")
+      setStep("game-type-selection");
+    else if (step === "new-game") setStep("new-game-player-select");
+    else onBack();
   };
 
   const onClickNewGame = async () => {
+    setStep("new-game-player-select");
+  };
+
+  const onClickSetPlayer = async () => {
     setStep("new-game");
     await loadTeams();
   };
@@ -56,7 +75,10 @@ export default function GameSetupScreen({
     setStep("join-game");
   };
 
-  const joinGame = () => {};
+  const joinGame = () => {
+    setPlayerHandle(playerName);
+    onJoin(joinGameCode, playerName);
+  };
 
   const loadTeams = async () => {
     try {
@@ -81,26 +103,54 @@ export default function GameSetupScreen({
           </Button>
         </div>
       )}
+      {step === "new-game-player-select" && (
+        <div className="join-game">
+          <TextInput
+            value={playerName}
+            placeholder="Enter player name"
+            onChange={setPlayerName}
+          />
+          <div className="buttons-container">
+            <Button variant="transparent" onClick={onClickBack}>
+              Back
+            </Button>
+            <Button variant="primary" onClick={onClickSetPlayer}>
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
       {step === "new-game" && (
         <div className="team-selection-container">
           {loading && <div>Loading teams...</div>}
-          {!loading && <TeamSelection teams={teams} onSubmit={onSetTeams} />}
+          {!loading && (
+            <TeamSelection
+              teams={teams}
+              onSubmit={onSetTeams}
+              onBack={onClickBack}
+            />
+          )}
         </div>
       )}
       {step === "join-game" && (
         <div className="join-game">
           <h3>Join Game</h3>
           <TextInput
+            value={playerName}
+            placeholder="Enter player name"
+            onChange={setPlayerName}
+          />
+          <TextInput
             value={joinGameCode}
             placeholder="Enter game code"
             onChange={setJoinGameCode}
           />
           <div className="buttons-container">
-            <Button variant="primary" onClick={joinGame}>
-              Join
-            </Button>
             <Button variant="transparent" onClick={onClickBack}>
               Back
+            </Button>
+            <Button variant="primary" onClick={joinGame}>
+              Join
             </Button>
           </div>
         </div>

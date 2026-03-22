@@ -36,7 +36,7 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
   const { game, lastAtBatResult, isAtBatProcessing } = useGame();
   const { playerId } = usePlayer();
 
-  console.log("Current Game State:", game?.currentState.stateType);
+  console.log("Current Game State:", game?.currentStateData.stateType);
 
   if (!game) {
     return <div>Loading game...</div>;
@@ -77,7 +77,7 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
 
   function getPlayers(team: GameTeam): Array<GamePlayer> | undefined {
     return team.players?.map((player) => {
-      return { id: player.id, name: player.id };
+      return { id: player.id, handle: player.username };
     });
   }
 
@@ -133,9 +133,8 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
               <img src={atBatLoader} alt="Processing at bat..." />
             </div>
           )}
-          {game?.currentState.stateType === GameEngineStateType.GAME_END && (
-            <FinalScore {...getFinalScore()} />
-          )}
+          {game?.currentStateData.stateType ===
+            GameEngineStateType.GAME_END && <FinalScore {...getFinalScore()} />}
         </div>
       </div>
 

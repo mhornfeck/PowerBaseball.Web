@@ -3,6 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type PlayerContextType = {
   playerId: string;
+  playerHandle: string;
+  setPlayerHandle: (handle: string) => void;
 };
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -13,6 +15,7 @@ function generatePlayerId() {
 
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [playerId, setPlayerId] = useState<string>("");
+  const [playerHandle, setPlayerHandle] = useState<string>("");
 
   useEffect(() => {
     const stored = localStorage.getItem("playerId");
@@ -27,7 +30,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <PlayerContext.Provider value={{ playerId }}>
+    <PlayerContext.Provider value={{ playerId, playerHandle, setPlayerHandle }}>
       {children}
     </PlayerContext.Provider>
   );
