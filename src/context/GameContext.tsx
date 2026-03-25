@@ -6,6 +6,7 @@ import {
   AtBatResult,
   GameStateUpdatedSnapshot,
 } from "../broadcasting/snapshots";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export type GameState = GameEngineData;
 
@@ -37,7 +38,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (connectionRef.current) return;
 
     const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7181/hubs/game") // adjust port
+      .withUrl(`${API_BASE}/hubs/game`)
       .withAutomaticReconnect()
       .build();
 

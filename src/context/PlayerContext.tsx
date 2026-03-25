@@ -1,5 +1,5 @@
-// PlayerContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 type PlayerContextType = {
   playerId: string;
@@ -10,7 +10,7 @@ type PlayerContextType = {
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 function generatePlayerId() {
-  return crypto.randomUUID();
+  return uuidv4();
 }
 
 export function PlayerProvider({ children }: { children: React.ReactNode }) {

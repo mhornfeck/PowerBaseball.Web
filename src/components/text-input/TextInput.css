@@ -21,6 +21,7 @@
     border-color 0.15s ease,
     box-shadow 0.15s ease;
   background: transparent;
+  color: #c6cdd8;
 }
 
 .text-input::placeholder {
