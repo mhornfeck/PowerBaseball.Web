@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PitchType = number;
+export enum PitchType {
+    FASTBALL = 'Fastball',
+    CURVEBALL = 'Curveball',
+    SLIDER = 'Slider',
+}

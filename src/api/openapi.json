@@ -783,15 +783,30 @@
         }
       },
       "NullableOfPitchLocationHorizontal": {
-        "type": "integer",
+        "enum": [
+          "Inside",
+          "Middle",
+          "Outside",
+          null
+        ],
         "nullable": true
       },
       "NullableOfPitchLocationVertical": {
-        "type": "integer",
+        "enum": [
+          "High",
+          "Medium",
+          "Low",
+          null
+        ],
         "nullable": true
       },
       "NullableOfPitchType": {
-        "type": "integer",
+        "enum": [
+          "Fastball",
+          "Curveball",
+          "Slider",
+          null
+        ],
         "nullable": true
       },
       "PitcherInput": {
@@ -810,13 +825,25 @@
         "nullable": true
       },
       "PitchLocationHorizontal": {
-        "type": "integer"
+        "enum": [
+          "Inside",
+          "Middle",
+          "Outside"
+        ]
       },
       "PitchLocationVertical": {
-        "type": "integer"
+        "enum": [
+          "High",
+          "Medium",
+          "Low"
+        ]
       },
       "PitchType": {
-        "type": "integer"
+        "enum": [
+          "Fastball",
+          "Curveball",
+          "Slider"
+        ]
       },
       "StartGameRequest": {
         "required": [

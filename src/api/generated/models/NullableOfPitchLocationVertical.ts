@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type NullableOfPitchLocationVertical = number | null;
+export enum NullableOfPitchLocationVertical {
+    HIGH = 'High',
+    MEDIUM = 'Medium',
+    LOW = 'Low',
+}

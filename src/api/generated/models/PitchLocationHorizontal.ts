@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PitchLocationHorizontal = number;
+export enum PitchLocationHorizontal {
+    INSIDE = 'Inside',
+    MIDDLE = 'Middle',
+    OUTSIDE = 'Outside',
+}

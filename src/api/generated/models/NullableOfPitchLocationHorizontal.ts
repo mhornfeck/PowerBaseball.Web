@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type NullableOfPitchLocationHorizontal = number | null;
+export enum NullableOfPitchLocationHorizontal {
+    INSIDE = 'Inside',
+    MIDDLE = 'Middle',
+    OUTSIDE = 'Outside',
+}

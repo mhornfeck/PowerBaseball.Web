@@ -2,4 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type NullableOfPitchType = number | null;
+export enum NullableOfPitchType {
+    FASTBALL = 'Fastball',
+    CURVEBALL = 'Curveball',
+    SLIDER = 'Slider',
+}
