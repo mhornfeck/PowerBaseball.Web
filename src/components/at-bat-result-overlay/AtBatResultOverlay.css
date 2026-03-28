@@ -1,0 +1,89 @@
+.atbat-result-overlay {
+  position: absolute;
+  top: 30%; 
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 1500;
+  pointer-events: none;
+  border: 5px solid yellow;
+  padding: 60px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+}
+
+.atbat-result-overlay.out {
+  border-color: #ff4444;
+}
+
+.atbat-result-overlay.homerun {
+  border-color: #66ff33;
+}
+
+.atbat-result-text {
+  font-family: 'Doto', sans-serif;
+  font-size: 64px;
+  letter-spacing: 6px;
+  color: #ffcc00;
+  text-shadow:
+    0 0 8px rgba(255, 204, 0, 0.8),
+    0 0 16px rgba(255, 204, 0, 0.6);
+}
+
+/* Out variant (red) */
+.atbat-result-text.out {
+  color: #ff4444;
+  text-shadow:
+    0 0 8px rgba(255, 68, 68, 0.8),
+    0 0 16px rgba(255, 68, 68, 0.6);
+}
+
+/* Homerun variant (bright green) */
+.atbat-result-text.homerun {
+  color: #66ff33;
+  text-shadow:
+    0 0 8px rgba(102, 255, 51, 0.8),
+    0 0 16px rgba(102, 255, 51, 0.6);
+}
+
+.atbat-result-batter {
+  font-family: 'Doto', sans-serif;
+  font-size: 28px;
+  margin-top: 12px;
+  letter-spacing: 3px;
+  color: white;
+}
+
+@keyframes scoreboardBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.blink {
+  animation: scoreboardBlink 0.4s ease-in-out 6;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.atbat-result-text {
+  animation:
+    popIn 0.2s ease-out,
+    scoreboardBlink 0.4s ease-in-out 9 0.2s;
+}

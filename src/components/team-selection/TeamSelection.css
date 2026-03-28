@@ -1,0 +1,42 @@
+.team-selection select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+.team-selection select:focus {
+  outline: none;
+  border-color: #1e3a8a;
+  box-shadow: 0 0 5px rgba(30, 58, 138, 0.5);
+}
+
+.team-selectors {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+  height: 100px;
+}
+
+.team-selectors .team-selector {
+  min-width: 260px;
+  flex: 1 1 200px;
+}
+
+.teams-container {
+  margin-bottom: 20px;
+}
+
+.teams-container--group {
+  text-align: left;
+  display: flex;
+}
+
+.team-label {
+  font-weight: bold;
+  width: 70px;
+}

@@ -1,0 +1,74 @@
+/* --- Root Layout --- */
+
+.game-runner-container {
+  height: 100vh;
+  width: 100vw;
+
+  display: grid;
+
+  grid-template-columns: minmax(260px, 1fr) 3fr minmax(260px, 1fr);
+
+  gap: 16px;
+  padding: 16px;
+
+  background-image: url("/images/baseball-field.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* --- Side Columns --- */
+
+.team-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  height: 100%; /* fill container height */
+  min-height: 0; /* important for flex overflow handling */
+}
+
+.panel {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+.team-column .panel:first-child {
+  flex: 1; /* lineup expands/shrinks */
+  min-height: 0;
+}
+
+/* --- Center Column --- */
+
+.center-column {
+  display: grid;
+
+  grid-template-rows: 0.25fr 0.75fr;
+
+  gap: 16px;
+}
+
+/* --- Other Layout Parts --- */
+
+.scoreboard-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.game-display {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-display .at-bat-processing-overlay img {
+  max-height: 200px;
+  max-width: 200px;
+}

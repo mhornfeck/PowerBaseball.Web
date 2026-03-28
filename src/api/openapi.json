@@ -1,0 +1,962 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "PowerBaseball.API | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:7181/"
+    }
+  ],
+  "paths": {
+    "/game-engine/new": {
+      "post": {
+        "tags": [
+          "GameEngine"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartGameRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartGameRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartGameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewGameResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewGameResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewGameResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-engine/load": {
+      "post": {
+        "tags": [
+          "GameEngine"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoadGameRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoadGameRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoadGameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/game-engine/join": {
+      "post": {
+        "tags": [
+          "GameEngine"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGameRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGameRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/game-engine/event": {
+      "post": {
+        "tags": [
+          "GameEngine"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameEventRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameEventRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameEventRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamListingModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamListingModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamListingModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AtBatInput": {
+        "type": "object",
+        "properties": {
+          "pitcherInput": {
+            "$ref": "#/components/schemas/PitcherInput"
+          },
+          "batterInput": {
+            "$ref": "#/components/schemas/BatterInput"
+          }
+        }
+      },
+      "AtBatResultType": {
+        "enum": [
+          "Out",
+          "Single",
+          "Double",
+          "Triple",
+          "Homerun"
+        ]
+      },
+      "Batter": {
+        "required": [
+          "firstName",
+          "lastName",
+          "jerseyNumber",
+          "attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "jerseyNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/BatterAttributes"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/BattingStatistics"
+          },
+          "log": {
+            "$ref": "#/components/schemas/BattingLog"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Batter2": {
+        "required": [
+          "firstName",
+          "lastName",
+          "jerseyNumber",
+          "attributes"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "jerseyNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attributes": { },
+          "statistics": { },
+          "log": { },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "nullable": true
+      },
+      "BatterAttributes": {
+        "required": [
+          "contact",
+          "power"
+        ],
+        "type": "object",
+        "properties": {
+          "contact": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "power": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "overall": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BatterInput": {
+        "type": "object",
+        "properties": {
+          "swingType": {
+            "$ref": "#/components/schemas/SwingType"
+          },
+          "pitchType": {
+            "$ref": "#/components/schemas/NullableOfPitchType"
+          },
+          "pitchLocationHorizontal": {
+            "$ref": "#/components/schemas/NullableOfPitchLocationHorizontal"
+          },
+          "pitchLocationVertical": {
+            "$ref": "#/components/schemas/NullableOfPitchLocationVertical"
+          }
+        },
+        "nullable": true
+      },
+      "BattingLog": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BattingLogEntry"
+            }
+          }
+        }
+      },
+      "BattingLogEntry": {
+        "type": "object",
+        "properties": {
+          "inning": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resultType": {
+            "$ref": "#/components/schemas/AtBatResultType"
+          },
+          "runsBattedIn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scored": {
+            "type": "boolean"
+          },
+          "displayString": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BattingStatistics": {
+        "type": "object",
+        "properties": {
+          "runs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "singles": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "doubles": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "triples": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "homeruns": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "atBats": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "runsBattedIn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBases": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "battingAverage": {
+            "type": "number",
+            "format": "double"
+          },
+          "sluggingPercentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "sluggingPercentageDisplay": {
+            "type": "string",
+            "nullable": true
+          },
+          "battingAverageDisplay": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "properties": {
+          "homeTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "awayTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "inning": {
+            "$ref": "#/components/schemas/Inning"
+          },
+          "firstBase": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "secondBase": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "thirdBase": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "battingTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "pitchingTeam": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "currentBatter": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "isFinal": {
+            "type": "boolean"
+          },
+          "outs": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GameEngineData": {
+        "required": [
+          "gameId",
+          "home",
+          "away",
+          "game",
+          "currentStateData",
+          "currentAtBatInput"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "home": {
+            "$ref": "#/components/schemas/GameTeam"
+          },
+          "away": {
+            "$ref": "#/components/schemas/GameTeam"
+          },
+          "game": {
+            "$ref": "#/components/schemas/Game"
+          },
+          "currentStateData": {
+            "$ref": "#/components/schemas/GameEngineStateData"
+          },
+          "currentAtBatInput": {
+            "$ref": "#/components/schemas/AtBatInput"
+          }
+        }
+      },
+      "GameEngineStateData": {
+        "type": "object",
+        "properties": {
+          "stateType": {
+            "$ref": "#/components/schemas/GameEngineStateType"
+          }
+        }
+      },
+      "GameEngineStateType": {
+        "enum": [
+          "WaitForPlayers",
+          "GetPitcherInput",
+          "GetBatterInput",
+          "ResolveAtBat",
+          "InningEnd",
+          "GameEnd"
+        ]
+      },
+      "GameEventRequest": {
+        "required": [
+          "eventType"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/GameEventRequestPlayerReadyEventRequest"
+          },
+          {
+            "$ref": "#/components/schemas/GameEventRequestPitcherInputEventRequest"
+          },
+          {
+            "$ref": "#/components/schemas/GameEventRequestBatterInputEventRequest"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "eventType",
+          "mapping": {
+            "player-ready": "#/components/schemas/GameEventRequestPlayerReadyEventRequest",
+            "pitcher-input": "#/components/schemas/GameEventRequestPitcherInputEventRequest",
+            "batter-input": "#/components/schemas/GameEventRequestBatterInputEventRequest"
+          }
+        }
+      },
+      "GameEventRequestBatterInputEventRequest": {
+        "properties": {
+          "eventType": {
+            "enum": [
+              "batter-input"
+            ],
+            "type": "string"
+          },
+          "swingType": {
+            "$ref": "#/components/schemas/SwingType"
+          },
+          "pitchType": {
+            "$ref": "#/components/schemas/NullableOfPitchType"
+          },
+          "pitchLocationHorizontal": {
+            "$ref": "#/components/schemas/NullableOfPitchLocationHorizontal"
+          },
+          "pitchLocationVertical": {
+            "$ref": "#/components/schemas/NullableOfPitchLocationVertical"
+          },
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "GameEventRequestPitcherInputEventRequest": {
+        "properties": {
+          "eventType": {
+            "enum": [
+              "pitcher-input"
+            ],
+            "type": "string"
+          },
+          "pitchType": {
+            "$ref": "#/components/schemas/PitchType"
+          },
+          "pitchLocationHorizontal": {
+            "$ref": "#/components/schemas/PitchLocationHorizontal"
+          },
+          "pitchLocationVertical": {
+            "$ref": "#/components/schemas/PitchLocationVertical"
+          },
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "GameEventRequestPlayerReadyEventRequest": {
+        "properties": {
+          "eventType": {
+            "enum": [
+              "player-ready"
+            ],
+            "type": "string"
+          },
+          "playerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "GamePlayer": {
+        "required": [
+          "id",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "GamePlayer2": {
+        "required": [
+          "id",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "nullable": true
+      },
+      "GamePlayerModel": {
+        "required": [
+          "id",
+          "handle"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "handle": {
+            "type": "string"
+          }
+        }
+      },
+      "GameTeam": {
+        "required": [
+          "team",
+          "mode",
+          "players"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "team": {
+            "$ref": "#/components/schemas/Team"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/GameTeamMode"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GamePlayer"
+            },
+            "nullable": true
+          },
+          "activePlayer": {
+            "$ref": "#/components/schemas/GamePlayer2"
+          }
+        }
+      },
+      "GameTeamMode": {
+        "enum": [
+          "Human",
+          "Computer"
+        ]
+      },
+      "Inning": {
+        "type": "object",
+        "properties": {
+          "inningNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inningHalf": {
+            "$ref": "#/components/schemas/InningHalf"
+          }
+        }
+      },
+      "InningHalf": {
+        "enum": [
+          "Top",
+          "Bottom"
+        ]
+      },
+      "JoinGameRequest": {
+        "required": [
+          "gameId",
+          "playerId",
+          "playerHandle"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "playerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "playerHandle": {
+            "type": "string"
+          }
+        }
+      },
+      "JoinGameResponse": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GameEngineData"
+          }
+        }
+      },
+      "Lineup": {
+        "type": "object",
+        "properties": {
+          "batters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Batter"
+            }
+          },
+          "overallRating": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LoadGameRequest": {
+        "required": [
+          "gameId"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "NewGameResponse": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GameEngineData"
+          }
+        }
+      },
+      "NullableOfPitchLocationHorizontal": {
+        "enum": [
+          "Inside",
+          "Middle",
+          "Outside",
+          null
+        ],
+        "nullable": true
+      },
+      "NullableOfPitchLocationVertical": {
+        "enum": [
+          "High",
+          "Medium",
+          "Low",
+          null
+        ],
+        "nullable": true
+      },
+      "NullableOfPitchType": {
+        "enum": [
+          "Fastball",
+          "Curveball",
+          "Slider",
+          null
+        ],
+        "nullable": true
+      },
+      "PitcherInput": {
+        "type": "object",
+        "properties": {
+          "pitchType": {
+            "$ref": "#/components/schemas/PitchType"
+          },
+          "pitchLocationHorizontal": {
+            "$ref": "#/components/schemas/PitchLocationHorizontal"
+          },
+          "pitchLocationVertical": {
+            "$ref": "#/components/schemas/PitchLocationVertical"
+          }
+        },
+        "nullable": true
+      },
+      "PitchLocationHorizontal": {
+        "enum": [
+          "Inside",
+          "Middle",
+          "Outside"
+        ]
+      },
+      "PitchLocationVertical": {
+        "enum": [
+          "High",
+          "Medium",
+          "Low"
+        ]
+      },
+      "PitchType": {
+        "enum": [
+          "Fastball",
+          "Curveball",
+          "Slider"
+        ]
+      },
+      "StartGameRequest": {
+        "required": [
+          "homeTeam",
+          "awayTeam"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "homeTeam": {
+            "$ref": "#/components/schemas/TeamControlModel"
+          },
+          "awayTeam": {
+            "$ref": "#/components/schemas/TeamControlModel"
+          }
+        }
+      },
+      "SwingType": {
+        "type": "integer"
+      },
+      "Team": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "overall": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lineup": {
+            "$ref": "#/components/schemas/Lineup"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/BattingStatistics"
+          },
+          "currentBatter": {
+            "$ref": "#/components/schemas/Batter2"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boxScore": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        }
+      },
+      "TeamControlModel": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GamePlayerModel"
+            }
+          }
+        }
+      },
+      "TeamListingModel": {
+        "required": [
+          "id",
+          "city",
+          "name",
+          "overallRating"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "overallRating": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "GameEngine"
+    },
+    {
+      "name": "Teams"
+    }
+  ]
+}

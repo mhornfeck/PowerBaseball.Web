@@ -1,0 +1,63 @@
+.bases-panel {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  margin: 1rem 0;
+}
+
+.diamond {
+  position: relative;
+  width: 70px;
+  height: 60px;
+  margin: -10px 0 10px 0;
+}
+
+.base {
+  width: clamp(24px, 5vw, 36px);
+  height: clamp(24px, 5vw, 36px);
+  background: white;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transform: rotate(45deg); /* diamond shape */
+  transition: all 0.2s ease;
+}
+
+/* Occupied base */
+.base.occupied {
+  background: red;
+  color: white;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+}
+
+.base.occupied .jersey-number {
+  transform: rotate(-45deg);
+}
+
+/* Positioning for TV-style 3/4 diamond */
+.second {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.third {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-50%, 50%);
+}
+
+.first {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(50%, 50%);
+}

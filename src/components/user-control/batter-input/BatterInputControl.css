@@ -1,0 +1,50 @@
+.pitch-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.pitch-panel {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 32px;
+  border-radius: 12px;
+  min-width: 300px;
+  text-align: center;
+}
+
+.pitch-panel h3 {
+  margin-bottom: 20px;
+  color: white;
+}
+
+.pitch-panel .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.strikezone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(3, 80px);
+  gap: 6px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.strikezone-cell {
+  background: #2c2c2c;
+  border: 2px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.strikezone-cell:hover {
+  background: #3a3a3a;
+  border-color: #ff0000;
+  transform: scale(1.05);
+}

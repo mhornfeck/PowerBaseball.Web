@@ -1,0 +1,32 @@
+.final-score {
+  padding: 60px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  border: 5px solid #66ff33;
+  min-width: 30vw;
+}
+
+.final-score .text-container {
+  font-family: "Doto", sans-serif;
+  color: white;
+}
+
+.final-score .text-container .winning-team-name {
+  font-size: 64px;
+  letter-spacing: 6px;
+}
+
+.final-score .text-container .wins-label {
+  font-size: 36px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  color: #66ff33;
+  text-shadow:
+    0 0 8px rgba(102, 255, 51, 0.8),
+    0 0 16px rgba(102, 255, 51, 0.6);
+}
+
+.final-score .text-container .score-display {
+  font-size: 28px;
+  margin-bottom: 25px;
+}
