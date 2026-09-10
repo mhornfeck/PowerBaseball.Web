@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Batter2 } from './Batter2';
+import type { Batter } from './Batter';
 import type { BattingStatistics } from './BattingStatistics';
 import type { Lineup } from './Lineup';
 export type Team = {
@@ -12,7 +12,7 @@ export type Team = {
     overall?: number;
     lineup?: Lineup;
     statistics?: BattingStatistics;
-    currentBatter?: Batter2;
+    currentBatter?: Batter;
     score?: number;
     boxScore?: Array<number | null>;
 };

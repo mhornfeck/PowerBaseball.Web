@@ -1,11 +1,11 @@
-import { Batter2 } from "../../api/generated";
+import { Batter } from "../../api/generated";
 import { useGame } from "../../context/GameContext";
 import "./BaseRunnersPanel.css";
 
 export function BaseRunnersPanel() {
   const { game } = useGame();
 
-  const renderBase = (runner?: Batter2) => (
+  const renderBase = (runner?: Batter) => (
     <div className={`base ${runner ? "occupied" : ""}`}>
       <span className="jersey-number">{runner ? runner.jerseyNumber : ""}</span>
     </div>

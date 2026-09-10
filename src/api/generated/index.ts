@@ -10,7 +10,6 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 export type { AtBatInput } from './models/AtBatInput';
 export { AtBatResultType } from './models/AtBatResultType';
 export type { Batter } from './models/Batter';
-export type { Batter2 } from './models/Batter2';
 export type { BatterAttributes } from './models/BatterAttributes';
 export type { BatterInput } from './models/BatterInput';
 export type { BattingLog } from './models/BattingLog';
@@ -25,7 +24,6 @@ export type { GameEventRequestBatterInputEventRequest } from './models/GameEvent
 export type { GameEventRequestPitcherInputEventRequest } from './models/GameEventRequestPitcherInputEventRequest';
 export type { GameEventRequestPlayerReadyEventRequest } from './models/GameEventRequestPlayerReadyEventRequest';
 export type { GamePlayer } from './models/GamePlayer';
-export type { GamePlayer2 } from './models/GamePlayer2';
 export type { GamePlayerModel } from './models/GamePlayerModel';
 export type { GameTeam } from './models/GameTeam';
 export { GameTeamMode } from './models/GameTeamMode';
