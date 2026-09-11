@@ -1,10 +1,12 @@
-import type { Batter, Team } from "../api/generated";
+import type { Batter, GamePlayer, GameTeam, Team } from "../api/generated";
 import type { GameState } from "../context/GameContext";
 import type {
+  ActivePlayerInfo,
   BaseRunners,
   BatterInfo,
   ScoreboardState,
   TeamBoxScore,
+  TurnState,
 } from "../types/game";
 
 function mapBatterInfo(batter?: Batter | null): BatterInfo | null {
@@ -48,5 +50,25 @@ export function mapScoreboard(game: GameState | null): ScoreboardState {
     outs: game?.game.outs ?? 0,
     away: mapTeamBoxScore(game?.game.awayTeam, game?.away.team),
     home: mapTeamBoxScore(game?.game.homeTeam, game?.home.team),
+  };
+}
+
+function mapActivePlayer(player?: GamePlayer | null): ActivePlayerInfo | null {
+  if (!player) return null;
+
+  return { id: player.id, name: player.username };
+}
+
+export function mapTurnState(game: GameState | null): TurnState {
+  const battingTeamId = game?.game.battingTeam?.id;
+  const teams: GameTeam[] = game ? [game.home, game.away] : [];
+
+  const battingTeam = teams.find((t) => t.id === battingTeamId);
+  const pitchingTeam = teams.find((t) => t.id !== battingTeamId);
+
+  return {
+    battingTeamName: game?.game.battingTeam?.city ?? null,
+    battingTeamActivePlayer: mapActivePlayer(battingTeam?.activePlayer),
+    pitchingTeamActivePlayer: mapActivePlayer(pitchingTeam?.activePlayer),
   };
 }

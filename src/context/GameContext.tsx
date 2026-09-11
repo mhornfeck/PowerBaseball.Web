@@ -8,13 +8,18 @@ import {
 } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import type { GameEngineData } from "../api/generated/models/GameEngineData";
+import type { GameEngineStateType } from "../api/generated/models/GameEngineStateType";
 import {
   AtBatResolvedSnapshot,
   AtBatResult,
   GameStateUpdatedSnapshot,
 } from "../broadcasting/snapshots";
-import { mapBaseRunners, mapScoreboard } from "../mappers/game.mapper";
-import type { BaseRunners, ScoreboardState } from "../types/game";
+import {
+  mapBaseRunners,
+  mapScoreboard,
+  mapTurnState,
+} from "../mappers/game.mapper";
+import type { BaseRunners, ScoreboardState, TurnState } from "../types/game";
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export type GameState = GameEngineData;
@@ -29,6 +34,8 @@ type GameContextType = {
   clearLastAtBatResult: () => void;
   runners: BaseRunners;
   scoreboard: ScoreboardState;
+  turnState: TurnState;
+  stateType: GameEngineStateType | null;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -45,6 +52,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const runners = useMemo(() => mapBaseRunners(game), [game]);
   const scoreboard = useMemo(() => mapScoreboard(game), [game]);
+  const turnState = useMemo(() => mapTurnState(game), [game]);
+  const stateType = game?.currentStateData.stateType ?? null;
 
   const connectionRef = useRef<HubConnection | null>(null);
   const gameIdRef = useRef<string | null>(null);
@@ -121,6 +130,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         clearLastAtBatResult,
         runners,
         scoreboard,
+        turnState,
+        stateType,
       }}
     >
       {children}

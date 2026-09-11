@@ -13,9 +13,9 @@ interface UserControlProps {
 }
 
 export default function UserControl({ onSubmitInput }: UserControlProps) {
-  const { game } = useGame();
+  const { stateType } = useGame();
 
-  if (!game) return null; // not loaded yet
+  if (!stateType) return null; // not loaded yet
 
   const onSubmitBatterInput = (data: PitchInput) => {
     onSubmitInput("batter-input", data);
@@ -25,7 +25,7 @@ export default function UserControl({ onSubmitInput }: UserControlProps) {
     onSubmitInput("pitcher-input", data);
   };
 
-  switch (game.currentStateData.stateType) {
+  switch (stateType) {
     case GameEngineStateType.WAIT_FOR_PLAYERS:
     case GameEngineStateType.INNING_END:
       return <WaitForPlayersControl />;

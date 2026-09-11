@@ -39,3 +39,14 @@ export type ScoreboardState = {
   away: TeamBoxScore;
   home: TeamBoxScore;
 };
+
+export type ActivePlayerInfo = {
+  id: string;
+  name: string;
+};
+
+export type TurnState = {
+  battingTeamName: string | null;
+  battingTeamActivePlayer: ActivePlayerInfo | null;
+  pitchingTeamActivePlayer: ActivePlayerInfo | null;
+};

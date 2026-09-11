@@ -10,25 +10,17 @@ type UseCurrentPlayerResult = {
 export function useCurrentPlayer(
   expectedRole: "batting" | "pitching",
 ): UseCurrentPlayerResult {
-  const { game } = useGame();
+  const { turnState } = useGame();
   const { playerId } = usePlayer();
 
-  if (!game) return { isActive: false };
-
-  const battingTeamId = game.game.battingTeam?.id;
-
-  const teams = [game.home, game.away];
-
-  const battingTeam = teams.find((t) => t.id === battingTeamId);
-  const pitchingTeam = teams.find((t) => t.id !== battingTeamId);
-
-  const targetTeam = expectedRole === "batting" ? battingTeam : pitchingTeam;
-
-  const activePlayer = targetTeam?.activePlayer;
+  const activePlayer =
+    expectedRole === "batting"
+      ? turnState.battingTeamActivePlayer
+      : turnState.pitchingTeamActivePlayer;
 
   return {
     isActive: activePlayer?.id === playerId,
     activePlayerId: activePlayer?.id,
-    activePlayerName: activePlayer?.username,
+    activePlayerName: activePlayer?.name,
   };
 }
