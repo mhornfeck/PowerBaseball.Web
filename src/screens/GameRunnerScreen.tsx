@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useGame, GameState } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
 import {
-  Batter,
   GameEngineService,
   GameEngineStateType,
   GameTeam,
@@ -33,7 +32,7 @@ interface GameRunnerScreenProps {
 export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
 
-  const { game, lastAtBatResult, isAtBatProcessing } = useGame();
+  const { game, lastAtBatResult, isAtBatProcessing, lineups } = useGame();
   const { playerId } = usePlayer();
 
   console.log("Current Game State:", game?.currentStateData.stateType);
@@ -91,14 +90,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
       {/* AWAY COLUMN */}
       <div className="team-column">
         <LineupPanel
-          teamName={game.away.team.city!}
-          players={game.away.team.lineup!.batters!.map((batter: Batter) => ({
-            jerseyNumber: batter.jerseyNumber,
-            name: batter.name!,
-            hits: batter.statistics!.hits!,
-            atBats: batter.statistics!.atBats!,
-          }))}
-          currentBatterId={game.away.team.currentBatter!.jerseyNumber}
+          teamName={lineups.away.teamName}
+          players={lineups.away.players}
+          currentBatterId={lineups.away.currentBatter?.jerseyNumber}
           onPlayerClick={setSelectedPlayer}
         />
 
@@ -113,9 +107,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
           )}
 
         {game.game.inning?.inningHalf === "Top" &&
-          game.game.battingTeam?.currentBatter && (
+          lineups.away.currentBatter && (
             <div className="away-batter">
-              <BatterCard batter={game.game.battingTeam.currentBatter} />
+              <BatterCard batter={lineups.away.currentBatter} />
             </div>
           )}
       </div>
@@ -144,14 +138,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
       {/* HOME COLUMN */}
       <div className="team-column">
         <LineupPanel
-          teamName={game.home.team.city!}
-          players={game.home.team.lineup!.batters!.map((batter: Batter) => ({
-            jerseyNumber: batter.jerseyNumber,
-            name: batter.name!,
-            hits: batter.statistics!.hits!,
-            atBats: batter.statistics!.atBats!,
-          }))}
-          currentBatterId={game.home.team.currentBatter!.jerseyNumber}
+          teamName={lineups.home.teamName}
+          players={lineups.home.players}
+          currentBatterId={lineups.home.currentBatter?.jerseyNumber}
           onPlayerClick={setSelectedPlayer}
         />
 
@@ -166,9 +155,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
           )}
 
         {game.game.inning?.inningHalf === "Bottom" &&
-          game.game.battingTeam?.currentBatter && (
+          lineups.home.currentBatter && (
             <div className="home-batter">
-              <BatterCard batter={game.game.battingTeam.currentBatter} />
+              <BatterCard batter={lineups.home.currentBatter} />
             </div>
           )}
       </div>

@@ -4,8 +4,11 @@ import type {
   ActivePlayerInfo,
   BaseRunners,
   BatterInfo,
+  Lineups,
+  PlayerLine,
   ScoreboardState,
   TeamBoxScore,
+  TeamLineup,
   TurnState,
 } from "../types/game";
 
@@ -70,5 +73,29 @@ export function mapTurnState(game: GameState | null): TurnState {
     battingTeamName: game?.game.battingTeam?.city ?? null,
     battingTeamActivePlayer: mapActivePlayer(battingTeam?.activePlayer),
     pitchingTeamActivePlayer: mapActivePlayer(pitchingTeam?.activePlayer),
+  };
+}
+
+function mapPlayerLine(batter: Batter): PlayerLine {
+  return {
+    jerseyNumber: batter.jerseyNumber,
+    name: batter.name ?? `${batter.firstName} ${batter.lastName}`,
+    hits: batter.statistics?.hits ?? 0,
+    atBats: batter.statistics?.atBats ?? 0,
+  };
+}
+
+function mapTeamLineup(team: Team | undefined): TeamLineup {
+  return {
+    teamName: team?.city ?? "",
+    players: team?.lineup?.batters?.map(mapPlayerLine) ?? [],
+    currentBatter: team?.currentBatter ?? null,
+  };
+}
+
+export function mapLineups(game: GameState | null): Lineups {
+  return {
+    home: mapTeamLineup(game?.home.team),
+    away: mapTeamLineup(game?.away.team),
   };
 }

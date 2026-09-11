@@ -1,3 +1,5 @@
+import type { Batter } from "../api/generated";
+
 export type PlayerLine = {
   jerseyNumber: number;
   name: string;
@@ -49,4 +51,15 @@ export type TurnState = {
   battingTeamName: string | null;
   battingTeamActivePlayer: ActivePlayerInfo | null;
   pitchingTeamActivePlayer: ActivePlayerInfo | null;
+};
+
+export type TeamLineup = {
+  teamName: string;
+  players: PlayerLine[];
+  currentBatter: Batter | null;
+};
+
+export type Lineups = {
+  home: TeamLineup;
+  away: TeamLineup;
 };
