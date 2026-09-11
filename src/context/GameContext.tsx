@@ -33,6 +33,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const clearLastAtBatResult = () => setLastAtBatResult(null);
 
   const connectionRef = useRef<HubConnection | null>(null);
+  const gameIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (connectionRef.current) return;
@@ -72,8 +73,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       .catch((err) => console.error("SignalR connection error:", err));
 
     connection.onreconnected(() => {
-      if (game?.gameId) {
-        connection.invoke("JoinGame", game.gameId);
+      if (gameIdRef.current) {
+        connection.invoke("JoinGame", gameIdRef.current);
       }
     });
 
@@ -83,6 +84,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    gameIdRef.current = game?.gameId ?? null;
+
     const connection = connectionRef.current;
     if (!connection || !game?.gameId) return;
 
