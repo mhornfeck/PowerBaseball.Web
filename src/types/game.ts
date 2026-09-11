@@ -1,4 +1,4 @@
-import type { Batter } from "../api/generated";
+import type { Batter, GameTeamMode } from "../api/generated";
 
 export type PlayerLine = {
   jerseyNumber: number;
@@ -69,3 +69,19 @@ export type FinalScoreState = {
   winningScore: number;
   losingScore: number;
 } | null;
+
+export type HumanPlayer = {
+  id: string;
+  handle: string;
+};
+
+export type TeamRoster = {
+  mode: GameTeamMode;
+  humanPlayers: HumanPlayer[];
+  activePlayerId: string | null;
+};
+
+export type Rosters = {
+  home: TeamRoster;
+  away: TeamRoster;
+};

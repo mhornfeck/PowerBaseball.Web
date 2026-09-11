@@ -4,14 +4,10 @@ import Button from "../button/Button";
 import Modal from "../modal/Modal";
 import TextInput from "../text-input/TextInput";
 import { useState } from "react";
-
-export type GamePlayer = {
-  id: string;
-  handle: string;
-};
+import { HumanPlayer } from "../../types/game";
 
 type Props = {
-  players: GamePlayer[];
+  players: HumanPlayer[];
   activePlayerId?: string;
   gameId?: string;
 };

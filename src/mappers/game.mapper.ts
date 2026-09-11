@@ -1,3 +1,4 @@
+import { GameTeamMode } from "../api/generated";
 import type { Batter, GamePlayer, GameTeam, Team } from "../api/generated";
 import type { GameState } from "../context/GameContext";
 import type {
@@ -5,11 +6,14 @@ import type {
   BaseRunners,
   BatterInfo,
   FinalScoreState,
+  HumanPlayer,
   Lineups,
   PlayerLine,
+  Rosters,
   ScoreboardState,
   TeamBoxScore,
   TeamLineup,
+  TeamRoster,
   TurnState,
 } from "../types/game";
 
@@ -114,5 +118,24 @@ export function mapFinalScore(game: GameState | null): FinalScoreState {
     winningTeamName: winningTeam.city ?? "",
     winningScore: Math.max(homeScore, awayScore),
     losingScore: Math.min(homeScore, awayScore),
+  };
+}
+
+function mapHumanPlayer(player: GamePlayer): HumanPlayer {
+  return { id: player.id, handle: player.username };
+}
+
+function mapTeamRoster(team: GameTeam | undefined): TeamRoster {
+  return {
+    mode: team?.mode ?? GameTeamMode.COMPUTER,
+    humanPlayers: team?.players?.map(mapHumanPlayer) ?? [],
+    activePlayerId: team?.activePlayer?.id ?? null,
+  };
+}
+
+export function mapRosters(game: GameState | null): Rosters {
+  return {
+    home: mapTeamRoster(game?.home),
+    away: mapTeamRoster(game?.away),
   };
 }

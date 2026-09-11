@@ -4,12 +4,7 @@ import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
 import { useGame } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
-import {
-  GameEngineService,
-  GameEngineStateType,
-  GameTeam,
-  GameTeamMode,
-} from "../api/generated";
+import { GameEngineService, GameEngineStateType, GameTeamMode } from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
@@ -19,9 +14,7 @@ import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatRes
 import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
 import { BatterCard } from "../components/batter-card/BatterCard";
 import FinalScore from "../components/final-score/FinalScore";
-import GamePlayersPanel, {
-  GamePlayer,
-} from "../components/game-players-panel/GamePlayersPanel";
+import GamePlayersPanel from "../components/game-players-panel/GamePlayersPanel";
 
 interface GameRunnerScreenProps {
   onEndGame: () => void;
@@ -30,8 +23,15 @@ interface GameRunnerScreenProps {
 export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
 
-  const { game, lastAtBatResult, isAtBatProcessing, lineups, stateType, finalScore } =
-    useGame();
+  const {
+    game,
+    lastAtBatResult,
+    isAtBatProcessing,
+    lineups,
+    stateType,
+    finalScore,
+    rosters,
+  } = useGame();
   const { playerId } = usePlayer();
 
   console.log("Current Game State:", stateType);
@@ -58,15 +58,6 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
     }
   };
 
-  function getPlayers(team: GameTeam): Array<GamePlayer> | undefined {
-    return team.players?.map((player) => {
-      return { id: player.id, handle: player.username };
-    });
-  }
-
-  const awayTeamHumanPlayers = getPlayers(game?.away);
-  const homeTeamHumanPlayers = getPlayers(game?.home);
-
   return (
     <div className="game-runner-container">
       {/* HEADER */}
@@ -80,13 +71,12 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
           onPlayerClick={setSelectedPlayer}
         />
 
-        {game.away.mode === GameTeamMode.HUMAN &&
-          awayTeamHumanPlayers &&
-          awayTeamHumanPlayers?.length > 0 && (
+        {rosters.away.mode === GameTeamMode.HUMAN &&
+          rosters.away.humanPlayers.length > 0 && (
             <GamePlayersPanel
-              players={awayTeamHumanPlayers}
-              activePlayerId={game?.away?.activePlayer?.id}
-              gameId={game?.gameId}
+              players={rosters.away.humanPlayers}
+              activePlayerId={rosters.away.activePlayerId ?? undefined}
+              gameId={game.gameId}
             />
           )}
 
@@ -127,13 +117,12 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
           onPlayerClick={setSelectedPlayer}
         />
 
-        {game.home.mode === GameTeamMode.HUMAN &&
-          homeTeamHumanPlayers &&
-          homeTeamHumanPlayers?.length > 0 && (
+        {rosters.home.mode === GameTeamMode.HUMAN &&
+          rosters.home.humanPlayers.length > 0 && (
             <GamePlayersPanel
-              players={homeTeamHumanPlayers}
-              activePlayerId={game?.home?.activePlayer?.id}
-              gameId={game?.gameId}
+              players={rosters.home.humanPlayers}
+              activePlayerId={rosters.home.activePlayerId ?? undefined}
+              gameId={game.gameId}
             />
           )}
 

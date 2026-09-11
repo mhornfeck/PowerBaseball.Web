@@ -18,6 +18,7 @@ import {
   mapBaseRunners,
   mapFinalScore,
   mapLineups,
+  mapRosters,
   mapScoreboard,
   mapTurnState,
 } from "../mappers/game.mapper";
@@ -25,6 +26,7 @@ import type {
   BaseRunners,
   FinalScoreState,
   Lineups,
+  Rosters,
   ScoreboardState,
   TurnState,
 } from "../types/game";
@@ -46,6 +48,7 @@ type GameContextType = {
   stateType: GameEngineStateType | null;
   lineups: Lineups;
   finalScore: FinalScoreState;
+  rosters: Rosters;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -66,6 +69,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const stateType = game?.currentStateData.stateType ?? null;
   const lineups = useMemo(() => mapLineups(game), [game]);
   const finalScore = useMemo(() => mapFinalScore(game), [game]);
+  const rosters = useMemo(() => mapRosters(game), [game]);
 
   const connectionRef = useRef<HubConnection | null>(null);
   const gameIdRef = useRef<string | null>(null);
@@ -146,6 +150,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         stateType,
         lineups,
         finalScore,
+        rosters,
       }}
     >
       {children}
