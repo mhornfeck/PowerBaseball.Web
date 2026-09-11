@@ -2,7 +2,7 @@ import "./GameRunnerScreen.css";
 import Scoreboard from "../components/scoreboard/Scoreboard";
 import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
-import { useGame } from "../context/GameContext";
+import { useGame, GameState } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
 import {
   Batter,
@@ -60,9 +60,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
     }
   };
 
-  function getFinalScore(): FinalScoreProps {
-    const home = game?.game.homeTeam!;
-    const away = game?.game.awayTeam!;
+  function getFinalScore(currentGame: GameState): FinalScoreProps {
+    const home = currentGame.game.homeTeam!;
+    const away = currentGame.game.awayTeam!;
 
     const winningTeam = home.score! > away.score! ? home : away;
     const losingTeam = home.score! > away.score! ? away : home;
@@ -112,11 +112,12 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
             />
           )}
 
-        {game.game.inning?.inningHalf === "Top" && (
-          <div className="away-batter">
-            <BatterCard batter={game.game.battingTeam?.currentBatter!} />
-          </div>
-        )}
+        {game.game.inning?.inningHalf === "Top" &&
+          game.game.battingTeam?.currentBatter && (
+            <div className="away-batter">
+              <BatterCard batter={game.game.battingTeam.currentBatter} />
+            </div>
+          )}
       </div>
 
       {/* CENTER GAME DISPLAY */}
@@ -134,7 +135,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
             </div>
           )}
           {game?.currentStateData.stateType ===
-            GameEngineStateType.GAME_END && <FinalScore {...getFinalScore()} />}
+            GameEngineStateType.GAME_END && (
+              <FinalScore {...getFinalScore(game)} />
+            )}
         </div>
       </div>
 
@@ -162,11 +165,12 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
             />
           )}
 
-        {game.game.inning?.inningHalf === "Bottom" && (
-          <div className="home-batter">
-            <BatterCard batter={game.game.battingTeam?.currentBatter!} />
-          </div>
-        )}
+        {game.game.inning?.inningHalf === "Bottom" &&
+          game.game.battingTeam?.currentBatter && (
+            <div className="home-batter">
+              <BatterCard batter={game.game.battingTeam.currentBatter} />
+            </div>
+          )}
       </div>
 
       {/* MODALS / OVERLAYS */}

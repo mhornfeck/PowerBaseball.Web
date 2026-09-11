@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 type PlayerContextType = {
@@ -13,21 +13,18 @@ function generatePlayerId() {
   return uuidv4();
 }
 
+function loadOrCreatePlayerId() {
+  const stored = localStorage.getItem("playerId");
+  if (stored) return stored;
+
+  const newId = generatePlayerId();
+  localStorage.setItem("playerId", newId);
+  return newId;
+}
+
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
-  const [playerId, setPlayerId] = useState<string>("");
+  const [playerId] = useState<string>(loadOrCreatePlayerId);
   const [playerHandle, setPlayerHandle] = useState<string>("");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("playerId");
-
-    if (stored) {
-      setPlayerId(stored);
-    } else {
-      const newId = generatePlayerId();
-      localStorage.setItem("playerId", newId);
-      setPlayerId(newId);
-    }
-  }, []);
 
   return (
     <PlayerContext.Provider value={{ playerId, playerHandle, setPlayerHandle }}>
@@ -36,6 +33,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook is intentionally colocated with its provider
 export function usePlayer() {
   const context = useContext(PlayerContext);
   if (!context) {

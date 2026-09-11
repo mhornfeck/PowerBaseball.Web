@@ -59,23 +59,25 @@ export const BatterCard: React.FC<BatterCardProps> = ({ batter }) => {
           <div className="season-stat">
             <div className="stat-label">AVG</div>
             <div className="stat-value">
-              {batter.statistics?.battingAverageDisplay!}
+              {batter.statistics?.battingAverageDisplay ?? ""}
             </div>
           </div>
           <div className="season-stat">
             <div className="stat-label">SLG</div>
             <div className="stat-value">
-              {batter.statistics?.sluggingPercentageDisplay!}
+              {batter.statistics?.sluggingPercentageDisplay ?? ""}
             </div>
           </div>
           <div className="season-stat">
             <div className="stat-label">HR</div>
-            <div className="stat-value">{batter.statistics?.homeruns!}</div>
+            <div className="stat-value">{batter.statistics?.homeruns ?? 0}</div>
           </div>
 
           <div className="season-stat">
             <div className="stat-label">RBI</div>
-            <div className="stat-value">{batter.statistics?.runsBattedIn!}</div>
+            <div className="stat-value">
+              {batter.statistics?.runsBattedIn ?? 0}
+            </div>
           </div>
         </div>
       </div>
