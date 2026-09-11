@@ -1,10 +1,18 @@
 import { GameTeamMode } from "../api/generated";
-import type { Batter, GamePlayer, GameTeam, Team } from "../api/generated";
+import type {
+  Batter,
+  BattingLogEntry,
+  GamePlayer,
+  GameTeam,
+  Team,
+} from "../api/generated";
 import type { GameState } from "../context/GameContext";
 import type {
   ActivePlayerInfo,
   BaseRunners,
+  BatterCardInfo,
   BatterInfo,
+  BatterLogEntry,
   FinalScoreState,
   HumanPlayer,
   Lineups,
@@ -90,11 +98,35 @@ function mapPlayerLine(batter: Batter): PlayerLine {
   };
 }
 
+function mapBatterLogEntry(entry: BattingLogEntry): BatterLogEntry {
+  return {
+    inning: entry.inning ?? 0,
+    resultType: entry.resultType ?? "Out",
+  };
+}
+
+function mapBatterCard(batter: Batter): BatterCardInfo {
+  return {
+    jerseyNumber: batter.jerseyNumber,
+    firstName: batter.firstName,
+    lastName: batter.lastName,
+    todayHits: batter.statistics?.hits ?? 0,
+    todayAtBats: batter.statistics?.atBats ?? 0,
+    log: batter.log?.entries?.map(mapBatterLogEntry) ?? [],
+    seasonAvgDisplay: batter.statistics?.battingAverageDisplay ?? "",
+    seasonSlgDisplay: batter.statistics?.sluggingPercentageDisplay ?? "",
+    seasonHomeruns: batter.statistics?.homeruns ?? 0,
+    seasonRbi: batter.statistics?.runsBattedIn ?? 0,
+  };
+}
+
 function mapTeamLineup(team: Team | undefined): TeamLineup {
   return {
     teamName: team?.city ?? "",
     players: team?.lineup?.batters?.map(mapPlayerLine) ?? [],
-    currentBatter: team?.currentBatter ?? null,
+    currentBatter: team?.currentBatter
+      ? mapBatterCard(team.currentBatter)
+      : null,
   };
 }
 

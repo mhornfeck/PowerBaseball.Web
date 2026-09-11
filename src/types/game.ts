@@ -1,4 +1,4 @@
-import type { Batter, GameTeamMode } from "../api/generated";
+import type { GameTeamMode } from "../api/generated";
 
 export type PlayerLine = {
   jerseyNumber: number;
@@ -8,6 +8,24 @@ export type PlayerLine = {
 };
 
 export type AtBatResultType = 'Out' | 'Single' | 'Double' | 'Triple' | 'Homerun';
+
+export type BatterLogEntry = {
+  inning: number;
+  resultType: AtBatResultType;
+};
+
+export type BatterCardInfo = {
+  jerseyNumber: number;
+  firstName: string;
+  lastName: string;
+  todayHits: number;
+  todayAtBats: number;
+  log: BatterLogEntry[];
+  seasonAvgDisplay: string;
+  seasonSlgDisplay: string;
+  seasonHomeruns: number;
+  seasonRbi: number;
+};
 
 export type BatterInfo = {
   jerseyNumber: number;
@@ -56,7 +74,7 @@ export type TurnState = {
 export type TeamLineup = {
   teamName: string;
   players: PlayerLine[];
-  currentBatter: Batter | null;
+  currentBatter: BatterCardInfo | null;
 };
 
 export type Lineups = {
