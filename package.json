@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "preview": "vite preview",
     "api:pull": "dotenv -e .env.local -- cross-env-shell \"curl.exe -k $VITE_API_SPEC_URL -o src/api/openapi.json\"",
