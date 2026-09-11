@@ -63,3 +63,9 @@ export type Lineups = {
   home: TeamLineup;
   away: TeamLineup;
 };
+
+export type FinalScoreState = {
+  winningTeamName: string;
+  winningScore: number;
+  losingScore: number;
+} | null;

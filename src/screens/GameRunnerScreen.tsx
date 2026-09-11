@@ -2,7 +2,7 @@ import "./GameRunnerScreen.css";
 import Scoreboard from "../components/scoreboard/Scoreboard";
 import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
-import { useGame, GameState } from "../context/GameContext";
+import { useGame } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
 import {
   GameEngineService,
@@ -18,9 +18,7 @@ import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
 import { BatterCard } from "../components/batter-card/BatterCard";
-import FinalScore, {
-  FinalScoreProps,
-} from "../components/final-score/FinalScore";
+import FinalScore from "../components/final-score/FinalScore";
 import GamePlayersPanel, {
   GamePlayer,
 } from "../components/game-players-panel/GamePlayersPanel";
@@ -32,10 +30,11 @@ interface GameRunnerScreenProps {
 export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
 
-  const { game, lastAtBatResult, isAtBatProcessing, lineups } = useGame();
+  const { game, lastAtBatResult, isAtBatProcessing, lineups, stateType, finalScore } =
+    useGame();
   const { playerId } = usePlayer();
 
-  console.log("Current Game State:", game?.currentStateData.stateType);
+  console.log("Current Game State:", stateType);
 
   if (!game) {
     return <div>Loading game...</div>;
@@ -58,21 +57,6 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
       console.error("Error posting game engine event.");
     }
   };
-
-  function getFinalScore(currentGame: GameState): FinalScoreProps {
-    const home = currentGame.game.homeTeam!;
-    const away = currentGame.game.awayTeam!;
-
-    const winningTeam = home.score! > away.score! ? home : away;
-    const losingTeam = home.score! > away.score! ? away : home;
-
-    return {
-      winningTeamName: winningTeam.city!,
-      winningScore: winningTeam.score!,
-      losingScore: losingTeam.score!,
-      onDone: onEndGame,
-    };
-  }
 
   function getPlayers(team: GameTeam): Array<GamePlayer> | undefined {
     return team.players?.map((player) => {
@@ -128,10 +112,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
               <img src={atBatLoader} alt="Processing at bat..." />
             </div>
           )}
-          {game?.currentStateData.stateType ===
-            GameEngineStateType.GAME_END && (
-              <FinalScore {...getFinalScore(game)} />
-            )}
+          {stateType === GameEngineStateType.GAME_END && finalScore && (
+            <FinalScore {...finalScore} onDone={onEndGame} />
+          )}
         </div>
       </div>
 

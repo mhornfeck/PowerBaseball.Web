@@ -4,6 +4,7 @@ import type {
   ActivePlayerInfo,
   BaseRunners,
   BatterInfo,
+  FinalScoreState,
   Lineups,
   PlayerLine,
   ScoreboardState,
@@ -97,5 +98,21 @@ export function mapLineups(game: GameState | null): Lineups {
   return {
     home: mapTeamLineup(game?.home.team),
     away: mapTeamLineup(game?.away.team),
+  };
+}
+
+export function mapFinalScore(game: GameState | null): FinalScoreState {
+  const home = game?.game.homeTeam;
+  const away = game?.game.awayTeam;
+  if (!home || !away) return null;
+
+  const homeScore = home.score ?? 0;
+  const awayScore = away.score ?? 0;
+  const winningTeam = homeScore > awayScore ? home : away;
+
+  return {
+    winningTeamName: winningTeam.city ?? "",
+    winningScore: Math.max(homeScore, awayScore),
+    losingScore: Math.min(homeScore, awayScore),
   };
 }

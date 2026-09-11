@@ -16,12 +16,14 @@ import {
 } from "../broadcasting/snapshots";
 import {
   mapBaseRunners,
+  mapFinalScore,
   mapLineups,
   mapScoreboard,
   mapTurnState,
 } from "../mappers/game.mapper";
 import type {
   BaseRunners,
+  FinalScoreState,
   Lineups,
   ScoreboardState,
   TurnState,
@@ -43,6 +45,7 @@ type GameContextType = {
   turnState: TurnState;
   stateType: GameEngineStateType | null;
   lineups: Lineups;
+  finalScore: FinalScoreState;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -62,6 +65,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const turnState = useMemo(() => mapTurnState(game), [game]);
   const stateType = game?.currentStateData.stateType ?? null;
   const lineups = useMemo(() => mapLineups(game), [game]);
+  const finalScore = useMemo(() => mapFinalScore(game), [game]);
 
   const connectionRef = useRef<HubConnection | null>(null);
   const gameIdRef = useRef<string | null>(null);
@@ -141,6 +145,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         turnState,
         stateType,
         lineups,
+        finalScore,
       }}
     >
       {children}
