@@ -18,8 +18,6 @@ export default function WaitForPlayersControl() {
       return;
     }
 
-    game.game.battingTeam?.id;
-
     const request: GameEventRequestPlayerReadyEventRequest = {
       eventType: "player-ready",
       gameId: game.gameId,

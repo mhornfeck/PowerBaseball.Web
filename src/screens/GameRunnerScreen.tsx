@@ -4,13 +4,7 @@ import LineupPanel from "../components/lineup-panel/LineupPanel";
 import { useState } from "react";
 import { useGame } from "../context/GameContext";
 import { usePlayer } from "../context/PlayerContext";
-import {
-  Batter,
-  GameEngineService,
-  GameEngineStateType,
-  GameTeam,
-  GameTeamMode,
-} from "../api/generated";
+import { GameEngineService, GameEngineStateType, GameTeamMode } from "../api/generated";
 import { PlayerLine } from "../types/game";
 import BatterStats from "../components/batter-stats/BatterStats";
 import UserControl from "../components/user-control/UserControl";
@@ -19,12 +13,8 @@ import atBatLoader from "../assets/baseball-loader.gif";
 import { AtBatResultOverlay } from "../components/at-bat-result-overlay/AtBatResultOverlay";
 import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPanel";
 import { BatterCard } from "../components/batter-card/BatterCard";
-import FinalScore, {
-  FinalScoreProps,
-} from "../components/final-score/FinalScore";
-import GamePlayersPanel, {
-  GamePlayer,
-} from "../components/game-players-panel/GamePlayersPanel";
+import FinalScore from "../components/final-score/FinalScore";
+import GamePlayersPanel from "../components/game-players-panel/GamePlayersPanel";
 
 interface GameRunnerScreenProps {
   onEndGame: () => void;
@@ -33,10 +23,18 @@ interface GameRunnerScreenProps {
 export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerLine | null>(null);
 
-  const { game, lastAtBatResult, isAtBatProcessing } = useGame();
+  const {
+    game,
+    lastAtBatResult,
+    isAtBatProcessing,
+    lineups,
+    stateType,
+    finalScore,
+    rosters,
+  } = useGame();
   const { playerId } = usePlayer();
 
-  console.log("Current Game State:", game?.currentStateData.stateType);
+  console.log("Current Game State:", stateType);
 
   if (!game) {
     return <div>Loading game...</div>;
@@ -60,30 +58,6 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
     }
   };
 
-  function getFinalScore(): FinalScoreProps {
-    const home = game?.game.homeTeam!;
-    const away = game?.game.awayTeam!;
-
-    const winningTeam = home.score! > away.score! ? home : away;
-    const losingTeam = home.score! > away.score! ? away : home;
-
-    return {
-      winningTeamName: winningTeam.city!,
-      winningScore: winningTeam.score!,
-      losingScore: losingTeam.score!,
-      onDone: onEndGame,
-    };
-  }
-
-  function getPlayers(team: GameTeam): Array<GamePlayer> | undefined {
-    return team.players?.map((player) => {
-      return { id: player.id, handle: player.username };
-    });
-  }
-
-  const awayTeamHumanPlayers = getPlayers(game?.away);
-  const homeTeamHumanPlayers = getPlayers(game?.home);
-
   return (
     <div className="game-runner-container">
       {/* HEADER */}
@@ -91,32 +65,27 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
       {/* AWAY COLUMN */}
       <div className="team-column">
         <LineupPanel
-          teamName={game.away.team.city!}
-          players={game.away.team.lineup!.batters!.map((batter: Batter) => ({
-            jerseyNumber: batter.jerseyNumber,
-            name: batter.name!,
-            hits: batter.statistics!.hits!,
-            atBats: batter.statistics!.atBats!,
-          }))}
-          currentBatterId={game.away.team.currentBatter!.jerseyNumber}
+          teamName={lineups.away.teamName}
+          players={lineups.away.players}
+          currentBatterId={lineups.away.currentBatter?.jerseyNumber}
           onPlayerClick={setSelectedPlayer}
         />
 
-        {game.away.mode === GameTeamMode.HUMAN &&
-          awayTeamHumanPlayers &&
-          awayTeamHumanPlayers?.length > 0 && (
+        {rosters.away.mode === GameTeamMode.HUMAN &&
+          rosters.away.humanPlayers.length > 0 && (
             <GamePlayersPanel
-              players={awayTeamHumanPlayers}
-              activePlayerId={game?.away?.activePlayer?.id}
-              gameId={game?.gameId}
+              players={rosters.away.humanPlayers}
+              activePlayerId={rosters.away.activePlayerId ?? undefined}
+              gameId={game.gameId}
             />
           )}
 
-        {game.game.inning?.inningHalf === "Top" && (
-          <div className="away-batter">
-            <BatterCard batter={game.game.battingTeam?.currentBatter!} />
-          </div>
-        )}
+        {game.game.inning?.inningHalf === "Top" &&
+          lineups.away.currentBatter && (
+            <div className="away-batter">
+              <BatterCard batter={lineups.away.currentBatter} />
+            </div>
+          )}
       </div>
 
       {/* CENTER GAME DISPLAY */}
@@ -133,40 +102,36 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
               <img src={atBatLoader} alt="Processing at bat..." />
             </div>
           )}
-          {game?.currentStateData.stateType ===
-            GameEngineStateType.GAME_END && <FinalScore {...getFinalScore()} />}
+          {stateType === GameEngineStateType.GAME_END && finalScore && (
+            <FinalScore {...finalScore} onDone={onEndGame} />
+          )}
         </div>
       </div>
 
       {/* HOME COLUMN */}
       <div className="team-column">
         <LineupPanel
-          teamName={game.home.team.city!}
-          players={game.home.team.lineup!.batters!.map((batter: Batter) => ({
-            jerseyNumber: batter.jerseyNumber,
-            name: batter.name!,
-            hits: batter.statistics!.hits!,
-            atBats: batter.statistics!.atBats!,
-          }))}
-          currentBatterId={game.home.team.currentBatter!.jerseyNumber}
+          teamName={lineups.home.teamName}
+          players={lineups.home.players}
+          currentBatterId={lineups.home.currentBatter?.jerseyNumber}
           onPlayerClick={setSelectedPlayer}
         />
 
-        {game.home.mode === GameTeamMode.HUMAN &&
-          homeTeamHumanPlayers &&
-          homeTeamHumanPlayers?.length > 0 && (
+        {rosters.home.mode === GameTeamMode.HUMAN &&
+          rosters.home.humanPlayers.length > 0 && (
             <GamePlayersPanel
-              players={homeTeamHumanPlayers}
-              activePlayerId={game?.home?.activePlayer?.id}
-              gameId={game?.gameId}
+              players={rosters.home.humanPlayers}
+              activePlayerId={rosters.home.activePlayerId ?? undefined}
+              gameId={game.gameId}
             />
           )}
 
-        {game.game.inning?.inningHalf === "Bottom" && (
-          <div className="home-batter">
-            <BatterCard batter={game.game.battingTeam?.currentBatter!} />
-          </div>
-        )}
+        {game.game.inning?.inningHalf === "Bottom" &&
+          lineups.home.currentBatter && (
+            <div className="home-batter">
+              <BatterCard batter={lineups.home.currentBatter} />
+            </div>
+          )}
       </div>
 
       {/* MODALS / OVERLAYS */}

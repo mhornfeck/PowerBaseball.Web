@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { TeamsService, TeamListingModel } from "../api/generated";
 import TeamSelection from "../components/team-selection/TeamSelection";
 import Button from "../components/button/Button";

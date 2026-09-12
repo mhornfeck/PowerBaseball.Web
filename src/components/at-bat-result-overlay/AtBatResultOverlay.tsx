@@ -1,4 +1,4 @@
-import { AtBatResult } from "../../context/GameContext";
+import { AtBatResult } from "../../broadcasting/snapshots";
 import { Fireworks } from "../fireworks/Fireworks";
 import "./AtBatResultOverlay.css";
 

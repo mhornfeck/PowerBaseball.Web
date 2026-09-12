@@ -1,11 +1,11 @@
-import { Batter } from "../../api/generated";
 import { useGame } from "../../context/GameContext";
+import { BatterInfo } from "../../types/game";
 import "./BaseRunnersPanel.css";
 
 export function BaseRunnersPanel() {
-  const { game } = useGame();
+  const { runners } = useGame();
 
-  const renderBase = (runner?: Batter) => (
+  const renderBase = (runner: BatterInfo | null) => (
     <div className={`base ${runner ? "occupied" : ""}`}>
       <span className="jersey-number">{runner ? runner.jerseyNumber : ""}</span>
     </div>
@@ -14,9 +14,9 @@ export function BaseRunnersPanel() {
   return (
     <div className="bases-panel">
       <div className="diamond">
-        <div className="second">{renderBase(game?.game.secondBase)}</div>
-        <div className="third">{renderBase(game?.game.thirdBase)}</div>
-        <div className="first">{renderBase(game?.game.firstBase)}</div>
+        <div className="second">{renderBase(runners.second)}</div>
+        <div className="third">{renderBase(runners.third)}</div>
+        <div className="first">{renderBase(runners.first)}</div>
       </div>
     </div>
   );

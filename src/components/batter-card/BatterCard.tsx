@@ -1,10 +1,10 @@
 import React from "react";
 import "./BatterCard.css";
-import { Batter, BattingLogEntry } from "../../api/generated";
+import { BatterCardInfo } from "../../types/game";
 import defaultAvatar from "../../assets/avatar-default.png";
 
 export interface BatterCardProps {
-  batter: Batter;
+  batter: BatterCardInfo;
 }
 
 export const BatterCard: React.FC<BatterCardProps> = ({ batter }) => {
@@ -28,24 +28,20 @@ export const BatterCard: React.FC<BatterCardProps> = ({ batter }) => {
       <div className="batter-today">
         <div className="section-label">Today</div>
         <div className="today-line">
-          {batter.statistics?.hits} for {batter.statistics?.atBats}
+          {batter.todayHits} for {batter.todayAtBats}
         </div>
       </div>
 
       <div className="batter-atbats">
         <div className="section-label">At Bats</div>
-        <ul
-          className={
-            "atbat-log" + (batter.log?.entries?.length === 0 ? " empty" : "")
-          }
-        >
-          {batter.log?.entries?.length === 0 && (
+        <ul className={"atbat-log" + (batter.log.length === 0 ? " empty" : "")}>
+          {batter.log.length === 0 && (
             <li className="empty-state">{"No plate appearances."}</li>
           )}
-          {batter.log?.entries?.map((entry: BattingLogEntry, index: number) => (
+          {batter.log.map((entry, index) => (
             <li key={index}>
               <strong>{entry.inning}: </strong>
-              <span className={"result " + entry.resultType?.toLowerCase()}>
+              <span className={"result " + entry.resultType.toLowerCase()}>
                 {entry.resultType}
               </span>
             </li>
@@ -58,24 +54,20 @@ export const BatterCard: React.FC<BatterCardProps> = ({ batter }) => {
         <div className="season-stats-bar">
           <div className="season-stat">
             <div className="stat-label">AVG</div>
-            <div className="stat-value">
-              {batter.statistics?.battingAverageDisplay!}
-            </div>
+            <div className="stat-value">{batter.seasonAvgDisplay}</div>
           </div>
           <div className="season-stat">
             <div className="stat-label">SLG</div>
-            <div className="stat-value">
-              {batter.statistics?.sluggingPercentageDisplay!}
-            </div>
+            <div className="stat-value">{batter.seasonSlgDisplay}</div>
           </div>
           <div className="season-stat">
             <div className="stat-label">HR</div>
-            <div className="stat-value">{batter.statistics?.homeruns!}</div>
+            <div className="stat-value">{batter.seasonHomeruns}</div>
           </div>
 
           <div className="season-stat">
             <div className="stat-label">RBI</div>
-            <div className="stat-value">{batter.statistics?.runsBattedIn!}</div>
+            <div className="stat-value">{batter.seasonRbi}</div>
           </div>
         </div>
       </div>

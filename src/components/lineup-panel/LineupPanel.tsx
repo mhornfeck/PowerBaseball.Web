@@ -15,8 +15,8 @@ export default function LineupPanel({
   currentBatterId,
   onPlayerClick,
 }: LineupPanelProps) {
-  const { game } = useGame();
-  const isTeamAtBat = game?.game.battingTeam?.city === teamName;
+  const { turnState } = useGame();
+  const isTeamAtBat = turnState.battingTeamName === teamName;
   const activeClassName = isTeamAtBat ? "active" : "inactive";
 
   return (
