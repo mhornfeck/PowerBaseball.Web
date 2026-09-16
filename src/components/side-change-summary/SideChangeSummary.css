@@ -25,23 +25,14 @@
   margin-bottom: 6px;
 }
 
-.side-change-totals-table {
-  border-collapse: collapse;
-  text-align: center;
-  color: #ffd700;
-}
-
-.side-change-totals-table th,
-.side-change-totals-table td {
-  border: 1px solid white;
-  padding: 6px 12px;
-  font-size: 15px;
-  text-transform: uppercase;
-}
-
-.side-change-totals-table th {
+.side-change-stats-line {
   color: white;
-  font-size: 13px;
+  font-size: 15px;
+}
+
+.side-change-stats-line .stat-value {
+  color: #ffd700;
+  font-weight: bold;
 }
 
 .side-change-due-up-label {

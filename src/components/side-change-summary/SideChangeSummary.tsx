@@ -23,22 +23,13 @@ export function SideChangeSummary({ snapshot }: SideChangeSummaryProps) {
 
       <div className="side-change-line-score">
         <div className="side-change-team-name">{battingTeam.name}</div>
-        <table className="side-change-totals-table">
-          <thead>
-            <tr>
-              <th>R</th>
-              <th>H</th>
-              <th>LOB</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{summary.runs}</td>
-              <td>{summary.hits}</td>
-              <td>{summary.leftOnBase}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="side-change-stats-line">
+          <span className="stat-value">{summary.runs}</span> Run
+          {summary.runs === 1 ? "" : "s"},{" "}
+          <span className="stat-value">{summary.hits}</span> Hit
+          {summary.hits === 1 ? "" : "s"},{" "}
+          <span className="stat-value">{summary.leftOnBase}</span> LOB
+        </div>
       </div>
 
       <div className="side-change-due-up">
