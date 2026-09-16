@@ -27,7 +27,6 @@ export default function UserControl({ onSubmitInput }: UserControlProps) {
 
   switch (stateType) {
     case GameEngineStateType.WAIT_FOR_PLAYERS:
-    case GameEngineStateType.INNING_END:
       return <WaitForPlayersControl />;
     case GameEngineStateType.GET_BATTER_INPUT:
       return (
