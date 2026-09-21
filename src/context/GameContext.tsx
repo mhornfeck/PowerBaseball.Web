@@ -8,12 +8,12 @@ import {
 } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import type { GameEngineData } from "../api/generated/models/GameEngineData";
-import { GameEngineStateType } from "../api/generated/models/GameEngineStateType";
+import type { GameEngineStateType } from "../api/generated/models/GameEngineStateType";
+import type { SideChangeOccurredSnapshot } from "../api/generated";
 import {
   AtBatResolvedSnapshot,
   AtBatResult,
   GameStateUpdatedSnapshot,
-  SideChangeOccurredSnapshot,
 } from "../broadcasting/snapshots";
 import {
   mapBaseRunners,
@@ -61,17 +61,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     null,
   );
   const [isAtBatProcessing, setIsAtBatProcessing] = useState<boolean>(false);
-  const [lastSideChange, setLastSideChange] =
-    useState<SideChangeOccurredSnapshot | null>(null);
 
   const clearGame = () => setGame(null);
   const clearLastAtBatResult = () => setLastAtBatResult(null);
-  const clearLastSideChange = () => setLastSideChange(null);
 
   const runners = useMemo(() => mapBaseRunners(game), [game]);
   const scoreboard = useMemo(() => mapScoreboard(game), [game]);
   const turnState = useMemo(() => mapTurnState(game), [game]);
   const stateType = game?.currentStateData.stateType ?? null;
+  const lastSideChange = game?.lastSideChange ?? null;
   const lineups = useMemo(() => mapLineups(game), [game]);
   const finalScore = useMemo(() => mapFinalScore(game), [game]);
   const rosters = useMemo(() => mapRosters(game), [game]);
@@ -102,15 +100,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         });
 
         connection.on(
-          "SideChangeOccurred",
-          (snapshot: SideChangeOccurredSnapshot) => {
-            console.log("SideChangeOccurred received:", snapshot);
-
-            setLastSideChange(snapshot);
-          },
-        );
-
-        connection.on(
           "GameStateUpdated",
           (snapshot: GameStateUpdatedSnapshot) => {
             console.log("GameStateUpdated received:", snapshot);
@@ -118,13 +107,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             setIsAtBatProcessing(snapshot.stateType === "ResolveAtBat");
 
             clearLastAtBatResult();
-
-            // The summary should stay visible for the whole InningEnd state
-            // (while the "Ready" control waits on players), and only clear
-            // once the engine actually advances past it.
-            if (snapshot.stateType !== GameEngineStateType.INNING_END) {
-              clearLastSideChange();
-            }
 
             setGame(snapshot.data);
           },

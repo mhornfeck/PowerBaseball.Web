@@ -1,5 +1,4 @@
-import { InningHalf } from "../../api/generated/models/InningHalf";
-import { SideChangeOccurredSnapshot } from "../../broadcasting/snapshots";
+import { Batter, InningHalf, SideChangeOccurredSnapshot } from "../../api/generated";
 import WaitForPlayersControl from "../user-control/WaitForPlayersControl";
 import "./SideChangeSummary.css";
 
@@ -8,8 +7,11 @@ interface SideChangeSummaryProps {
 }
 
 export function SideChangeSummary({ snapshot }: SideChangeSummaryProps) {
-  const { inningNumber, inningHalf, battingTeam, pitchingTeam, summary, dueUp } =
+  const { inningNumber, inningHalf, battingTeam, pitchingTeam, summary } =
     snapshot;
+  // The backend's OpenAPI spec doesn't type this field beyond `any[]` yet -
+  // it's actually Batter[].
+  const dueUp = snapshot.dueUp as Batter[];
 
   // inningHalf is the half that just ended: Top ending means we're at the
   // middle of the inning, Bottom ending means the inning is fully over.

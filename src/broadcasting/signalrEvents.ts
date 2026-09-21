@@ -1,8 +1,5 @@
-import {
-  AtBatResolvedSnapshot,
-  GameStateUpdatedSnapshot,
-  SideChangeOccurredSnapshot,
-} from "./snapshots";
+import type { SideChangeOccurredSnapshot } from "../api/generated";
+import { AtBatResolvedSnapshot, GameStateUpdatedSnapshot } from "./snapshots";
 
 export type SignalREvents = {
   GameStateUpdated: GameStateUpdatedSnapshot;
