@@ -24,7 +24,6 @@ export function SideChangeSummary({ snapshot }: SideChangeSummaryProps) {
       </div>
 
       <div className="side-change-line-score">
-        <div className="side-change-team-name">{battingTeam.name}</div>
         <div className="side-change-stats-line">
           <span className="stat-value">{summary.runs}</span> Run
           {summary.runs === 1 ? "" : "s"},{" "}
@@ -36,7 +35,7 @@ export function SideChangeSummary({ snapshot }: SideChangeSummaryProps) {
 
       <div className="side-change-due-up">
         <div className="side-change-due-up-label">
-          {pitchingTeam.name} due up
+          DUE UP
         </div>
         <ul>
           {dueUp.map((batter) => (
