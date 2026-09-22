@@ -9,6 +9,7 @@ import {
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import type { GameEngineData } from "../api/generated/models/GameEngineData";
 import type { GameEngineStateType } from "../api/generated/models/GameEngineStateType";
+import type { SideChangeOccurredSnapshot } from "../api/generated";
 import {
   AtBatResolvedSnapshot,
   AtBatResult,
@@ -42,6 +43,7 @@ type GameContextType = {
   isAtBatProcessing: boolean;
   setLastAtBatResult: (result: AtBatResult) => void;
   clearLastAtBatResult: () => void;
+  lastSideChange: SideChangeOccurredSnapshot | null;
   runners: BaseRunners;
   scoreboard: ScoreboardState;
   turnState: TurnState;
@@ -67,6 +69,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const scoreboard = useMemo(() => mapScoreboard(game), [game]);
   const turnState = useMemo(() => mapTurnState(game), [game]);
   const stateType = game?.currentStateData.stateType ?? null;
+  const lastSideChange = game?.lastSideChange ?? null;
   const lineups = useMemo(() => mapLineups(game), [game]);
   const finalScore = useMemo(() => mapFinalScore(game), [game]);
   const rosters = useMemo(() => mapRosters(game), [game]);
@@ -144,6 +147,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         isAtBatProcessing,
         setLastAtBatResult,
         clearLastAtBatResult,
+        lastSideChange,
         runners,
         scoreboard,
         turnState,
