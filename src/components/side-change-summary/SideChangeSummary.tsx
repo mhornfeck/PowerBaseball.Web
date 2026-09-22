@@ -7,7 +7,7 @@ interface SideChangeSummaryProps {
 }
 
 export function SideChangeSummary({ snapshot }: SideChangeSummaryProps) {
-  const { inningNumber, inningHalf, battingTeam, pitchingTeam, summary } =
+  const { inningNumber, inningHalf, summary } =
     snapshot;
   // The backend's OpenAPI spec doesn't type this field beyond `any[]` yet -
   // it's actually Batter[].
