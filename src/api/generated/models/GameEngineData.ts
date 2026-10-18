@@ -6,6 +6,7 @@ import type { AtBatInput } from './AtBatInput';
 import type { Game } from './Game';
 import type { GameEngineStateData } from './GameEngineStateData';
 import type { GameTeam } from './GameTeam';
+import type { SideChangeOccurredSnapshot } from './SideChangeOccurredSnapshot';
 export type GameEngineData = {
     gameId: string;
     home: GameTeam;
@@ -13,5 +14,6 @@ export type GameEngineData = {
     game: Game;
     currentStateData: GameEngineStateData;
     currentAtBatInput: AtBatInput;
+    lastSideChange?: SideChangeOccurredSnapshot;
 };
 

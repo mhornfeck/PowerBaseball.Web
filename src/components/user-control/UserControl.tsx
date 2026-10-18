@@ -13,7 +13,7 @@ interface UserControlProps {
 }
 
 export default function UserControl({ onSubmitInput }: UserControlProps) {
-  const { stateType } = useGame();
+  const { stateType, lastSideChange } = useGame();
 
   if (!stateType) return null; // not loaded yet
 
@@ -27,8 +27,13 @@ export default function UserControl({ onSubmitInput }: UserControlProps) {
 
   switch (stateType) {
     case GameEngineStateType.WAIT_FOR_PLAYERS:
-    case GameEngineStateType.INNING_END:
       return <WaitForPlayersControl />;
+    case GameEngineStateType.INNING_END:
+      // GameRunnerScreen renders SideChangeSummary (which embeds its own
+      // WaitForPlayersControl) whenever lastSideChange is present. Fall back
+      // to a bare one here only if it's missing, so players always have a
+      // way to advance.
+      return lastSideChange ? null : <WaitForPlayersControl />;
     case GameEngineStateType.GET_BATTER_INPUT:
       return (
         <BatterInputControl

@@ -15,6 +15,7 @@ import { BaseRunnersPanel } from "../components/base-runners-panel/BaseRunnersPa
 import { BatterCard } from "../components/batter-card/BatterCard";
 import FinalScore from "../components/final-score/FinalScore";
 import GamePlayersPanel from "../components/game-players-panel/GamePlayersPanel";
+import { SideChangeSummary } from "../components/side-change-summary/SideChangeSummary";
 
 interface GameRunnerScreenProps {
   onEndGame: () => void;
@@ -27,6 +28,7 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
     game,
     lastAtBatResult,
     isAtBatProcessing,
+    lastSideChange,
     lineups,
     stateType,
     finalScore,
@@ -96,6 +98,9 @@ export default function GameRunnerScreen({ onEndGame }: GameRunnerScreenProps) {
         </div>
         <div className="game-display">
           {lastAtBatResult && <AtBatResultOverlay result={lastAtBatResult} />}
+          {stateType === GameEngineStateType.INNING_END && lastSideChange && (
+            <SideChangeSummary snapshot={lastSideChange} />
+          )}
           {!isAtBatProcessing && <UserControl onSubmitInput={handleInput} />}
           {isAtBatProcessing && (
             <div className="at-bat-processing-overlay">

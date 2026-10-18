@@ -1,0 +1,55 @@
+.side-change-summary {
+  max-width: 50%;
+  color: white;
+  text-align: center;
+}
+
+.side-change-half {
+  font-family: "Doto", sans-serif;
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: #ffcc00;
+  margin-bottom: 8px;
+}
+
+.side-change-line-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.side-change-team-name {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.side-change-stats-line {
+  color: white;
+  font-size: 15px;
+}
+
+.side-change-stats-line .stat-value {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.side-change-due-up-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.side-change-due-up ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.side-change-due-up li {
+  font-size: 14px;
+  padding: 2px 0;
+}
