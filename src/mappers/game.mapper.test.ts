@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Batter, GamePlayer, GameTeam, Team } from "../api/generated";
+import type { Batter, Game, GamePlayer, GameTeam, Team } from "../api/generated";
 import { AtBatResultType, GameTeamMode, InningHalf } from "../api/generated";
 import type { GameState } from "../context/GameContext";
 import {
@@ -46,15 +46,17 @@ function makeGameTeam(overrides: Partial<GameTeam> = {}): GameTeam {
   };
 }
 
-function makeGame(overrides: Partial<GameState> = {}): GameState {
+function makeGame(
+  overrides: Omit<Partial<GameState>, "game"> & { game?: Partial<Game> } = {},
+): GameState {
   return {
     gameId: "game-1",
     home: makeGameTeam({ id: "home-team" }),
     away: makeGameTeam({ id: "away-team" }),
-    game: {},
     currentStateData: {},
     currentAtBatInput: {},
     ...overrides,
+    game: (overrides.game ?? {}) as Game,
   };
 }
 

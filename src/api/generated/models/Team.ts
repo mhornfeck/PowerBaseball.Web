@@ -12,6 +12,7 @@ export type Team = {
     overall?: number;
     lineup?: Lineup;
     statistics?: BattingStatistics;
+    currentBatterIndex?: number;
     currentBatter?: Batter;
     score?: number;
     boxScore?: Array<number | null>;
