@@ -12,7 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "api:pull": "dotenv -e .env.local -- cross-env-shell \"curl.exe -k $VITE_API_SPEC_URL -o src/api/openapi.json\"",
-    "api:codegen": "openapi --input ./src/api/openapi.json --output ./src/api/generated --client fetch",
+    "api:codegen": "node scripts/codegen.mjs",
     "api:update": "npm run api:pull && npm run api:codegen"
   },
   "dependencies": {

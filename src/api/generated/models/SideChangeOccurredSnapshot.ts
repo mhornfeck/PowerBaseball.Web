@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { Batter } from './Batter';
 import type { HalfInningSummary } from './HalfInningSummary';
 import type { InningHalf } from './InningHalf';
 import type { Team } from './Team';
@@ -11,7 +12,7 @@ export type SideChangeOccurredSnapshot = {
     battingTeam: Team;
     pitchingTeam: Team;
     summary: HalfInningSummary;
-    dueUp: Array<any>;
+    dueUp: Array<Batter>;
     gameId: string;
 };
 

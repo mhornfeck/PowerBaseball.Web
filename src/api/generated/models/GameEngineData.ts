@@ -14,6 +14,6 @@ export type GameEngineData = {
     game: Game;
     currentStateData: GameEngineStateData;
     currentAtBatInput: AtBatInput;
-    lastSideChange?: SideChangeOccurredSnapshot;
+    lastSideChange?: (null | SideChangeOccurredSnapshot);
 };
 

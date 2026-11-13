@@ -5,7 +5,7 @@
 import type { BatterInput } from './BatterInput';
 import type { PitcherInput } from './PitcherInput';
 export type AtBatInput = {
-    pitcherInput?: PitcherInput;
-    batterInput?: BatterInput;
+    pitcherInput?: (null | PitcherInput);
+    batterInput?: (null | BatterInput);
 };
 

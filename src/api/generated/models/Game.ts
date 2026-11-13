@@ -6,12 +6,12 @@ import type { Batter } from './Batter';
 import type { Inning } from './Inning';
 import type { Team } from './Team';
 export type Game = {
-    homeTeam?: Team;
-    awayTeam?: Team;
+    homeTeam: Team;
+    awayTeam: Team;
     inning?: Inning;
-    firstBase?: Batter;
-    secondBase?: Batter;
-    thirdBase?: Batter;
+    firstBase?: (null | Batter);
+    secondBase?: (null | Batter);
+    thirdBase?: (null | Batter);
     battingTeam?: Team;
     pitchingTeam?: Team;
     currentBatter?: Batter;
