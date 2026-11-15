@@ -25,6 +25,8 @@ npm run api:codegen   # regenerate src/api/generated from src/api/openapi.json
 npm run api:update    # both of the above
 ```
 
+The backend serves OpenAPI 3.1 but the generator only understands 3.0, so `scripts/codegen.mjs` rewrites the 3.1 constructs it mishandles before generating. `src/api/openapi.json` stays exactly what the backend serves.
+
 `.env.local` must define `VITE_API_SPEC_URL` (spec source) and the app's `.env`/`.env.local` must define `VITE_API_BASE_URL` (backend base URL, used both by the app at runtime and by the Vite dev server's `/api` proxy in `vite.config.js`).
 
 ## Architecture

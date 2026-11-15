@@ -2,14 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { NullableOfPitchLocationHorizontal } from './NullableOfPitchLocationHorizontal';
-import type { NullableOfPitchLocationVertical } from './NullableOfPitchLocationVertical';
-import type { NullableOfPitchType } from './NullableOfPitchType';
+import type { PitchLocationHorizontal } from './PitchLocationHorizontal';
+import type { PitchLocationVertical } from './PitchLocationVertical';
+import type { PitchType } from './PitchType';
 import type { SwingType } from './SwingType';
 export type BatterInput = {
     swingType?: SwingType;
-    pitchType?: NullableOfPitchType;
-    pitchLocationHorizontal?: NullableOfPitchLocationHorizontal;
-    pitchLocationVertical?: NullableOfPitchLocationVertical;
+    pitchType?: (null | PitchType);
+    pitchLocationHorizontal?: (null | PitchLocationHorizontal);
+    pitchLocationVertical?: (null | PitchLocationVertical);
 };
 

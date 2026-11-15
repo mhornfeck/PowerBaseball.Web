@@ -10,6 +10,7 @@ export type GameTeam = {
     team: Team;
     mode: GameTeamMode;
     players: Array<GamePlayer> | null;
-    activePlayer?: GamePlayer;
+    activePlayerIndex?: number;
+    activePlayer?: (null | GamePlayer);
 };
 
