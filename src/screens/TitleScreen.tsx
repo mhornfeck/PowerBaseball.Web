@@ -1,5 +1,6 @@
 import Button from "../components/button/Button";
 import { useAuth } from "../context/AuthContext";
+import { playerDisplayName } from "../context/displayName";
 
 interface TitleScreenScreenProps {
   onStart: () => void
@@ -18,7 +19,7 @@ export default function TitleScreen({ onStart }: TitleScreenScreenProps) {
       </div>
       {user && (
         <div className="signed-in-as">
-          <span>Signed in as {user.email}</span>
+          <span>Signed in as {playerDisplayName(user)}</span>
           <Button variant="link" onClick={logout}>
             Sign out
           </Button>
