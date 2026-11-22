@@ -16,7 +16,7 @@
   text-transform: uppercase;
 }
 
-.btn-transparent:hover {
+.btn-transparent:hover:not(:disabled) {
   /* Hover state: Slightly opaque (e.g., 20% black) */
   background-color: rgba(231, 231, 231, 0.212);
 }
@@ -31,7 +31,7 @@
   text-transform: uppercase;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   /* Hover state: Slightly opaque (e.g., 20% black) */
   background-color: #ff0000;
 }
@@ -42,7 +42,7 @@
   text-transform: uppercase;
 }
 
-.btn-link:hover {
+.btn-link:hover:not(:disabled) {
   color: #ff0000;
 }
 
@@ -53,4 +53,9 @@
 .btn-size-compact {
   padding: 2px 4px;
   font-size: 10px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
