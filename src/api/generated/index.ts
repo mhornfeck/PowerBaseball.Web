@@ -47,8 +47,10 @@ export type { SwingType } from './models/SwingType';
 export type { Team } from './models/Team';
 export type { TeamControlModel } from './models/TeamControlModel';
 export type { TeamListingModel } from './models/TeamListingModel';
+export type { UpdateProfileRequest } from './models/UpdateProfileRequest';
 export type { VerifyLoginCodeRequest } from './models/VerifyLoginCodeRequest';
 
+export { AccountService } from './services/AccountService';
 export { AuthService } from './services/AuthService';
 export { GameEngineService } from './services/GameEngineService';
 export { TeamsService } from './services/TeamsService';

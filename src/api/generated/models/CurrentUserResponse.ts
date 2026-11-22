@@ -5,6 +5,8 @@
 export type CurrentUserResponse = {
     id: string;
     email: string;
+    displayName?: string | null;
+    displayNameIsGenerated?: boolean;
     roles: Array<string>;
 };
 
