@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import "@/api/generated/init";
+import { AuthProvider } from "./context/AuthContext";
 import { PlayerProvider } from "./context/PlayerContext";
 import { GameProvider } from "./context/GameContext";
 
@@ -13,9 +14,11 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-  <PlayerProvider>
-    <GameProvider>
-      <App />
-    </GameProvider>
-  </PlayerProvider>,
+  <AuthProvider>
+    <PlayerProvider>
+      <GameProvider>
+        <App />
+      </GameProvider>
+    </PlayerProvider>
+  </AuthProvider>,
 );

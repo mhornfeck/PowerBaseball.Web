@@ -7,10 +7,13 @@ import GameRunnerScreen from "./screens/GameRunnerScreen";
 import { GameEngineService } from "./api/generated";
 import { useGame } from "./context/GameContext";
 import { usePlayer } from "./context/PlayerContext";
+import { useAuth } from "./context/AuthContext";
+import LoginScreen from "./screens/LoginScreen";
 
 export default function App() {
   const [screen, setScreen] = useState("title");
 
+  const { status } = useAuth();
   const { setGame } = useGame();
   const { playerId } = usePlayer();
 
@@ -58,6 +61,9 @@ export default function App() {
       setScreen("game-runner");
     }
   };
+
+  if (status === "loading") return null;
+  if (status === "signedOut") return <LoginScreen />;
 
   return (
     <>

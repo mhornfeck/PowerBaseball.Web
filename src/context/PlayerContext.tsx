@@ -3,8 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 
 type PlayerContextType = {
   playerId: string;
-  playerHandle: string;
-  setPlayerHandle: (handle: string) => void;
 };
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -24,10 +22,9 @@ function loadOrCreatePlayerId() {
 
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [playerId] = useState<string>(loadOrCreatePlayerId);
-  const [playerHandle, setPlayerHandle] = useState<string>("");
 
   return (
-    <PlayerContext.Provider value={{ playerId, playerHandle, setPlayerHandle }}>
+    <PlayerContext.Provider value={{ playerId }}>
       {children}
     </PlayerContext.Provider>
   );

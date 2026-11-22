@@ -6,6 +6,8 @@ import { TeamSetup } from "../models/TeamSetup";
 import "./GameSetupScreen.css";
 import TextInput from "../components/text-input/TextInput";
 import { usePlayer } from "../context/PlayerContext";
+import { useAuth } from "../context/AuthContext";
+import { playerDisplayName } from "../context/displayName";
 
 interface GameSetupScreenProps {
   onBack: () => void;
@@ -13,11 +15,7 @@ interface GameSetupScreenProps {
   onJoin: (gameId: string, playerHandle: string) => void;
 }
 
-type GameSetupStep =
-  | "game-type-selection"
-  | "new-game"
-  | "new-game-player-select"
-  | "join-game";
+type GameSetupStep = "game-type-selection" | "new-game" | "join-game";
 
 export default function GameSetupScreen({
   onBack,
@@ -27,11 +25,13 @@ export default function GameSetupScreen({
   const [teams, setTeams] = useState<TeamListingModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [joinGameCode, setJoinGameCode] = useState("");
-  const [playerName, setPlayerName] = useState("");
 
   const [step, setStep] = useState<GameSetupStep>("game-type-selection");
 
-  const { setPlayerHandle, playerId } = usePlayer();
+  const { playerId } = usePlayer();
+  const { user } = useAuth();
+  // App only renders this screen when signed in.
+  const playerName = user ? playerDisplayName(user) : "";
 
   const onSetTeams = (
     homeTeam: TeamListingModel,
@@ -51,22 +51,16 @@ export default function GameSetupScreen({
       },
     };
 
-    setPlayerHandle(playerName);
     onDone(teamSetup);
   };
 
   const onClickBack = () => {
-    if (step === "new-game-player-select" || step === "join-game")
+    if (step === "new-game" || step === "join-game")
       setStep("game-type-selection");
-    else if (step === "new-game") setStep("new-game-player-select");
     else onBack();
   };
 
   const onClickNewGame = async () => {
-    setStep("new-game-player-select");
-  };
-
-  const onClickSetPlayer = async () => {
     setStep("new-game");
     await loadTeams();
   };
@@ -76,8 +70,7 @@ export default function GameSetupScreen({
   };
 
   const joinGame = () => {
-    setPlayerHandle(playerName);
-    onJoin(joinGameCode, playerName);
+    onJoin(joinGameCode.trim(), playerName);
   };
 
   const loadTeams = async () => {
@@ -92,6 +85,7 @@ export default function GameSetupScreen({
   return (
     <div className="game-setup-screen">
       <h1>Game Setup</h1>
+      <p className="playing-as">Playing as {playerName}</p>
 
       {step === "game-type-selection" && (
         <div className="game-type-selection">
@@ -101,23 +95,6 @@ export default function GameSetupScreen({
           <Button variant="primary" onClick={onClickJoinGame}>
             Join Game
           </Button>
-        </div>
-      )}
-      {step === "new-game-player-select" && (
-        <div className="join-game">
-          <TextInput
-            value={playerName}
-            placeholder="Enter player name"
-            onChange={setPlayerName}
-          />
-          <div className="buttons-container">
-            <Button variant="transparent" onClick={onClickBack}>
-              Back
-            </Button>
-            <Button variant="primary" onClick={onClickSetPlayer}>
-              Next
-            </Button>
-          </div>
         </div>
       )}
       {step === "new-game" && (
@@ -136,11 +113,6 @@ export default function GameSetupScreen({
         <div className="join-game">
           <h3>Join Game</h3>
           <TextInput
-            value={playerName}
-            placeholder="Enter player name"
-            onChange={setPlayerName}
-          />
-          <TextInput
             value={joinGameCode}
             placeholder="Enter game code"
             onChange={setJoinGameCode}
@@ -149,7 +121,11 @@ export default function GameSetupScreen({
             <Button variant="transparent" onClick={onClickBack}>
               Back
             </Button>
-            <Button variant="primary" onClick={joinGame}>
+            <Button
+              variant="primary"
+              onClick={joinGame}
+              disabled={!joinGameCode.trim()}
+            >
               Join
             </Button>
           </div>

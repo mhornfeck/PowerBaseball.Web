@@ -16,3 +16,9 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.game-setup-screen .playing-as {
+  margin-top: -8px;
+  color: #98a2b3;
+  font-size: 14px;
+}
